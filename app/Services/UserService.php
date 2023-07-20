@@ -80,13 +80,7 @@ class UserService {
 
     public function editUser($request, $id) {
         
-
         $user = User::findOrFail($id);
-
-        
-
-        // // // Get all the input data from the form
-        // // $inputData = $request->all();
 
         $validatedData = $request->validate([
             'first_name' => 'string|max:255',
@@ -98,8 +92,6 @@ class UserService {
             'address' => 'string|max:255',
             'roles' => 'nullable|json',
         ]);
-
-        
 
         // Filter out only the columns that are present in the validated data
         $fillableData = array_filter($validatedData, function ($value) {

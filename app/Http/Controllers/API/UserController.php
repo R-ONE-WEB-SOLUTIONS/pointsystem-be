@@ -23,7 +23,6 @@ class UserController extends Controller
     public function searchUsers(Request $request) 
     {
         return $this->userService->searchUsers($request);
-
     }
 
     
@@ -42,7 +41,6 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         return $this->userService->editUser($request, $id);
-
     }
 
     
