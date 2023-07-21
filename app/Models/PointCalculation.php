@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class PointCalculation extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'multiplier' => 'float',
+    ];
 }

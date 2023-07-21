@@ -15,4 +15,8 @@ class Account extends Model
         'client_id',
         'current_balance'
     ];
+
+    protected $casts = [
+        'current_balance' => 'float',
+    ];
 }

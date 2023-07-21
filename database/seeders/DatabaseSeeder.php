@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\UserType;
 use App\Models\ClientType;
 use Illuminate\Database\Seeder;
+use App\Models\PointCalculation;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
@@ -63,5 +64,17 @@ class DatabaseSeeder extends Seeder
         ];
 
         User::insert($user);
+
+        $point_calculation = [
+            [
+                'base_amount' => 200.00,
+                'points_per_base_amount' => 2,
+                'multiplier' => 0.01,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
+        ];
+
+        PointCalculation::insert($point_calculation);
     }
 }

@@ -81,7 +81,7 @@ class ClientService {
 
     public function viewUser($id) {
 
-        $client = Client::find($id);
+        $client = Client::findOrFail($id);
 
         if (!$client) {
             return response()->json(['error' => 'Client not found'], 404);
