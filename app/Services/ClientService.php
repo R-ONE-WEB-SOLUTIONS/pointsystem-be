@@ -35,6 +35,7 @@ class ClientService {
             'phone_number' => 'required|string|max:11',
             'address' => 'required|string|max:255',
             'client_type_id' => 'required',
+            'business_id' => 'required',
             'active' => 'required',
         ]);
     

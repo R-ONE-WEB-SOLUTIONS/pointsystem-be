@@ -26,6 +26,7 @@ class UserService {
             'phone_number' => 'required|string|max:11',
             'address' => 'required|string|max:255',
             'user_type_id' => 'required',
+            'business' => 'nullable',
             'roles' => 'nullable|json',
         ]);
     
