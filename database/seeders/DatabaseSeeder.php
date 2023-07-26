@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Business;
 use App\Models\UserType;
 use App\Models\ClientType;
 use Illuminate\Database\Seeder;
@@ -49,6 +50,23 @@ class DatabaseSeeder extends Seeder
 
         UserType::insert($userTypes);
 
+        $business = [
+            [
+                'businesse_name' => 'Euphoria',
+                'businesse_address' => 'somewhere',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'businesse_name' => 'Other Business',
+                'businesse_address' => 'somewhere',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
+        ];
+
+        Business::insert($business);
+
         $user = [
             [
                 'first_name' => 'Admin',
@@ -58,6 +76,7 @@ class DatabaseSeeder extends Seeder
                 'phone_number' => '09678777939',
                 'address' => 'Barra Opol',
                 'user_type_id' => 1,
+                'business_id' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]

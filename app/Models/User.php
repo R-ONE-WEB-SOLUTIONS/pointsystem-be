@@ -27,6 +27,7 @@ class User extends Authenticatable
         'phone_number',
         'address',
         'user_type_id',
+        'business_id',
         'roles'
     ];
 

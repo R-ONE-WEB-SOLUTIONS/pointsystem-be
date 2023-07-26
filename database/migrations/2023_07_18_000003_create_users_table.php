@@ -24,12 +24,14 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('address');
             $table->unsignedBigInteger('user_type_id');
+            $table->unsignedBigInteger('business_id');
             $table->json('roles')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
 
             $table->foreign('user_type_id')->references('id')->on('user_types');
+            $table->foreign('business_id')->references('id')->on('businesses');
         });
     }
 

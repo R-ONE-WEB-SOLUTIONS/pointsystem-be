@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Business;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Client extends Model
 {
@@ -24,5 +25,10 @@ class Client extends Model
     public function clientType()
     {
         return $this->belongsTo(ClientType::class);
+    }
+
+    public function Business()
+    {
+        return $this->belongsTo(Business::class);
     }
 }
