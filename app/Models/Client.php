@@ -19,6 +19,7 @@ class Client extends Model
         'phone_number',
         'address',
         'client_type_id',
+        'business_id',
         'active'
     ];
 

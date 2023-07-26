@@ -4,9 +4,13 @@ namespace Database\Seeders;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Client;
+use App\Models\PreReg;
+use App\Models\Account;
 use App\Models\Business;
 use App\Models\UserType;
 use App\Models\ClientType;
+use App\Models\Transaction;
 use Illuminate\Database\Seeder;
 use App\Models\PointCalculation;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -76,13 +80,118 @@ class DatabaseSeeder extends Seeder
                 'phone_number' => '09678777939',
                 'address' => 'Barra Opol',
                 'user_type_id' => 1,
+                'business_id' => null,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'first_name' => 'Roi',
+                'last_name' => 'Rotoras',
+                'email' => 'roi@gmail.com',
+                'password' => 'roi@gmail.com',
+                'phone_number' => '09678777888',
+                'address' => 'Balulang',
+                'user_type_id' => 2,
                 'business_id' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'first_name' => 'Jim',
+                'last_name' => 'Lao',
+                'email' => 'lao@gmail.com',
+                'password' => 'lao@gmail.com',
+                'phone_number' => '09678777999',
+                'address' => 'Barra Opol',
+                'user_type_id' => 2,
+                'business_id' => 2,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
         ];
 
         User::insert($user);
+
+        $pre_reg = [
+            [
+                'first_name' => 'Mark',
+                'last_name' => 'Achacoso',
+                'middle_name' => '',
+                'extension_name' => '',
+                'email' => 'mark@gmail.com',
+                'phone_number' => '09678777939',
+                'address' => 'somewhere',
+                'client_type_id' => 1,
+                'business_id' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'first_name' => 'Denzel',
+                'last_name' => 'Lanzaderas',
+                'middle_name' => '',
+                'extension_name' => '',
+                'email' => 'denz@gmail.com',
+                'phone_number' => '09678777939',
+                'address' => 'somewhere',
+                'client_type_id' => 2,
+                'business_id' => 2,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
+        ];
+        PreReg::insert($pre_reg);
+        $clients = [
+            [
+                'first_name' => 'Mark',
+                'last_name' => 'Achacoso',
+                'middle_name' => '',
+                'extension_name' => '',
+                'email' => 'mark@gmail.com',
+                'phone_number' => '09678777939',
+                'address' => 'somewhere',
+                'client_type_id' => 1,
+                'business_id' => 1,
+                'active' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'first_name' => 'Denzel',
+                'last_name' => 'Lanzaderas',
+                'middle_name' => '',
+                'extension_name' => '',
+                'email' => 'denz@gmail.com',
+                'phone_number' => '09678777939',
+                'address' => 'somewhere',
+                'client_type_id' => 2,
+                'business_id' => 2,
+                'active' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
+        ];
+        Client::insert($clients);
+
+        $account = [
+            [    
+                'account_number' => date("Ymd",time()) .'_'. 100000001,
+                'client_id' => 100000001,
+                'current_balance' => 20.00,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [    
+                'account_number' => date("Ymd",time()) .'_'. 100000002,
+                'client_id' => 100000002,
+                'current_balance' => 0.00,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
+        ];
+        
+        Account::insert($account);
+        
 
         $point_calculation = [
             [
@@ -95,5 +204,22 @@ class DatabaseSeeder extends Seeder
         ];
 
         PointCalculation::insert($point_calculation);
+
+        $transaction = [
+            [
+                'reference_id' => 1 . '_' . time(),
+                'reciept_number' => '123123123123',
+                'reciept_amount' => 2000.00,
+                'points' => 20.00,
+                'user_id' => 2,
+                'account_id' => 1,
+                'transaction_type' => 'Reward Points',
+                'previous_balance' => 0.00,
+                'void' => false,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
+        ];
+        Transaction::insert($transaction);
     }
 }

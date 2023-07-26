@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('address');
             $table->boolean('active');
             $table->unsignedBigInteger('client_type_id');
+            $table->unsignedBigInteger('business_id');
             $table->timestamps();
 
         });
@@ -36,6 +37,7 @@ return new class extends Migration
         // Add the foreign key constraint after setting the starting value to avoid errors.
         Schema::table('clients', function (Blueprint $table) {
             $table->foreign('client_type_id')->references('id')->on('client_types');
+            $table->foreign('business_id')->references('id')->on('businesses');
         });
     }
     

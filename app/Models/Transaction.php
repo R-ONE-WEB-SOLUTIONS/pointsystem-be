@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Account;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Transaction extends Model
 {
@@ -20,4 +21,16 @@ class Transaction extends Model
         'previous_balance',
         'void'
     ];
+
+    public function AccountID()
+    {
+        return $this->belongsTo(Account::class);
+    }
+
+    public function UserID()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
 }

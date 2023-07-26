@@ -23,9 +23,11 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('address');
             $table->unsignedBigInteger('client_type_id');
+            $table->unsignedBigInteger('business_id');
             $table->timestamps();
 
             $table->foreign('client_type_id')->references('id')->on('client_types');
+            $table->foreign('business_id')->references('id')->on('businesses');
         });
     }
 
