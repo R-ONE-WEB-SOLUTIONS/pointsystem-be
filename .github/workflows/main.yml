@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
-        php-version: '8.0'
+        php-version: '8.2.4'
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
@@ -23,6 +23,7 @@ jobs:
       run: ls -la
     - name: Install npm
       run: npm install
+      working-directory: ./
     - name: Generate Laravel Encryption Key
       run: php artisan key:generate
     - uses: actions/checkout@v3
