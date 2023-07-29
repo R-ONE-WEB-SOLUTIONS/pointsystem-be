@@ -43,6 +43,21 @@ jobs:
         node-version: 18.16.1
     - name: Install npm
       run: npm install
+    - name: Create .htaccess file
+      run: |
+        echo "<IfModule mod_rewrite.c>" > .htaccess
+            echo "Options +FollowSymLinks" >> .htaccess
+            echo "RewriteEngine On" >> .htaccess
+            echo "RewriteCond %{REQUEST_URI} !^/public/" >> .htaccess
+            echo "RewriteCond %{REQUEST_FILENAME} !-d" >> .htaccess
+            echo "RewriteCond %{REQUEST_FILENAME} !-f" >> .htaccess
+            echo "RewriteRule ^(.*)$ /public/$1" >> .htaccess
+            echo "#RewriteRule ^ index.php [L]" >> .htaccess
+            echo "RewriteRule ^(/)?$ public/index.php [L]" >> .htaccess
+        echo "</IfModule>"
+
+    - name: Move .htaccess to public directory
+      run: mv .htaccess public/.htaccess
     - name: Install sshpass
       run: sudo apt-get update && sudo apt-get install -y sshpass
     - name: Update known_hosts
