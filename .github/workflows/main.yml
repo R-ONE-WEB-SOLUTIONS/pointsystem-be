@@ -55,9 +55,7 @@ jobs:
             echo "#RewriteRule ^ index.php [L]" >> .htaccess
             echo "RewriteRule ^(/)?$ public/index.php [L]" >> .htaccess
         echo "</IfModule>"
-
-    - name: Move .htaccess to public directory
-      run: mv .htaccess public/.htaccess
+        
     - name: Install sshpass
       run: sudo apt-get update && sudo apt-get install -y sshpass
     - name: Update known_hosts
