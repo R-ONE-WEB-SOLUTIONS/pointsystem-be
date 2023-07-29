@@ -34,7 +34,7 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y sshpass
     - name: Create remote directory (if not exists)
       run: |
-        sshpass -p '${{ secrets.SSH_PASS }}' ssh -p 65002 u102654923@151.106.124.122 "mkdir -p /home/u102654923/domains/denzellanzaderas.online/public_html/loyalty-points-be"
+        sshpass -p 'Rone2k23!' ssh -p 65002 u102654923@151.106.124.122 "mkdir -p /home/u102654923/domains/denzellanzaderas.online/public_html/loyalty-points-be"
     - name: Deploy to Hostinger
       run: |
           sshpass -p '${{ secrets.SSH_PASS }}' rsync -avz -e "ssh -p 65002" ./ u102654923@151.106.124.122:/home/u102654923/domains/denzellanzaderas.online/public_html/loyalty-points-be
