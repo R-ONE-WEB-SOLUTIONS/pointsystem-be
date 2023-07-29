@@ -12,12 +12,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
-        php-version: '8.0'
+        php-version: '8.2'
+
+
+   
     - uses: actions/checkout@v3
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.test', '.env');"
+    - name: Create .env file from .env.test
+      run: cp .env.test .env
     - name: Install Composer
       run: |
         curl -sS https://getcomposer.org/installer | php
@@ -28,8 +34,28 @@ jobs:
 
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - name: Generate Laravel Encryption Key
+      run: php artisan key:generate
+      
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 18.16.1
+    - name: Install npm
+      run: npm install
+    - name: Create .htaccess file
+      run: |
+        echo "<IfModule mod_rewrite.c>" > .htaccess
+            echo "Options +FollowSymLinks" >> .htaccess
+            echo "RewriteEngine On" >> .htaccess
+            echo "RewriteCond %{REQUEST_URI} !^/public/" >> .htaccess
+            echo "RewriteCond %{REQUEST_FILENAME} !-d" >> .htaccess
+            echo "RewriteCond %{REQUEST_FILENAME} !-f" >> .htaccess
+            echo "RewriteRule ^(.*)$ /public/$1" >> .htaccess
+            echo "#RewriteRule ^ index.php [L]" >> .htaccess
+            echo "RewriteRule ^(/)?$ public/index.php [L]" >> .htaccess
+        echo "</IfModule>"
+        
     - name: Install sshpass
       run: sudo apt-get update && sudo apt-get install -y sshpass
     - name: Update known_hosts
