@@ -13,6 +13,7 @@ use App\Models\ClientType;
 use App\Models\Transaction;
 use Illuminate\Database\Seeder;
 use App\Models\PointCalculation;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
@@ -76,7 +77,7 @@ class DatabaseSeeder extends Seeder
                 'first_name' => 'Admin',
                 'last_name' => 'Admin',
                 'email' => 'admin@gmail.com',
-                'password' => 'admin@gmail.com',
+                'password' => Hash::make('admin@gmail.com'), // Hash the password
                 'phone_number' => '09678777939',
                 'address' => 'Barra Opol',
                 'user_type_id' => 1,
@@ -88,7 +89,7 @@ class DatabaseSeeder extends Seeder
                 'first_name' => 'Roi',
                 'last_name' => 'Rotoras',
                 'email' => 'roi@gmail.com',
-                'password' => 'roi@gmail.com',
+                'password' => Hash::make('roi@gmail.com'), // Hash the password
                 'phone_number' => '09678777888',
                 'address' => 'Balulang',
                 'user_type_id' => 2,
@@ -100,7 +101,7 @@ class DatabaseSeeder extends Seeder
                 'first_name' => 'Jim',
                 'last_name' => 'Lao',
                 'email' => 'lao@gmail.com',
-                'password' => 'lao@gmail.com',
+                'password' => Hash::make('lao@gmail.com'), // Hash the password
                 'phone_number' => '09678777999',
                 'address' => 'Barra Opol',
                 'user_type_id' => 2,
