@@ -36,7 +36,6 @@ jobs:
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Generate Laravel Encryption Key
       run: php artisan key:generate
-      
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
@@ -69,3 +68,5 @@ jobs:
     - name: Deploy to Hostinger
       run: |
           sshpass -p '${{ secrets.SSH_PASS }}' rsync -avz -e "ssh -p 65002" ./ u102654923@151.106.124.122:/home/u102654923/domains/denzellanzaderas.online/public_html/loyalty-points-be
+    - name: Migrate
+      run: php artisan migrate:fresh --seed
