@@ -69,4 +69,4 @@ jobs:
       run: |
           sshpass -p '${{ secrets.SSH_PASS }}' rsync -avz -e "ssh -p 65002" ./ u102654923@151.106.124.122:/home/u102654923/domains/denzellanzaderas.online/public_html/loyalty-points-be
     - name: Migrate
-      run: php artisn migrate:fresh --seed
+      run: php artisan migrate:fresh --seed
