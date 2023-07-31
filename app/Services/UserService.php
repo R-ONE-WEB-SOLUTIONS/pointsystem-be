@@ -43,13 +43,17 @@ class UserService {
 
     public function viewAllUsers() {
 
-            $users = User::all();
+            
+        $users = User::leftJoin('user_types', 'users.user_type_id', '=', 'user_types.id')
+            ->leftJoin('businesses', 'users.business_id', '=', 'businesses.id')
+            ->select('users.*', 'user_types.user_type', 'businesses.businesse_name')
+            ->get();
 
-            if ($users->isEmpty()) {
-                return response()->json(['message' => 'No users found'], 200);
-            }
-    
-            return response()->json($users, 200);
+        if ($users->isEmpty()) {
+            return response()->json(['message' => 'No users found'], 200);
+        }
+
+        return response()->json($users, 200);
       
     }
 

@@ -15,13 +15,15 @@ class ClientService {
     }
 
     public function viewClients() {
-        $client = Client::all();
+        $clients = Client::leftJoin('client_types', 'clients.client_type_id', '=', 'client_types.id')
+            ->leftJoin('businesses', 'clients.business_id', '=', 'businesses.id')
+            ->select('clients.*', 'client_types.client_type', 'businesses.businesse_name')
+            ->get();
+        if ($clients->isEmpty()) {
+            return response()->json(['message' => 'No Client found'], 200);
+        }
 
-            if ($client->isEmpty()) {
-                return response()->json(['message' => 'No Client found'], 200);
-            }
-    
-            return response()->json($client, 200);
+        return response()->json($clients, 200);
     }
 
     public function createClient($request) {

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\Client;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Business extends Model
 {
@@ -13,4 +15,14 @@ class Business extends Model
         'businesse_name',
         'businesse_address'
     ];
+
+    public function clients()
+    {
+        return $this->hasMany(Client::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }
