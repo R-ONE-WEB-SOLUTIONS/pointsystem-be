@@ -46,7 +46,24 @@ class UserService {
             
         $users = User::leftJoin('user_types', 'users.user_type_id', '=', 'user_types.id')
             ->leftJoin('businesses', 'users.business_id', '=', 'businesses.id')
-            ->select('users.*', 'user_types.user_type', 'businesses.businesse_name')
+            ->select('users.*', 'user_types.user_type', 'businesses.business_name')
+            ->get();
+
+        if ($users->isEmpty()) {
+            return response()->json(['message' => 'No users found'], 200);
+        }
+
+        return response()->json($users, 200);
+      
+    }
+
+    public function viewUsersByBID($request) {
+
+            
+        $users = User::where('business_id', '=', $request->business_id)
+            ->leftJoin('user_types', 'users.user_type_id', '=', 'user_types.id')
+            ->leftJoin('businesses', 'users.business_id', '=', 'businesses.id')
+            ->select('users.*', 'user_types.user_type', 'businesses.business_name')
             ->get();
 
         if ($users->isEmpty()) {

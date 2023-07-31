@@ -20,6 +20,11 @@ class UserController extends Controller
         return $this->userService->viewAllUsers();
     }
 
+    public function viewUsersByBID(Request $request) 
+    {
+        return $this->userService->viewUsersByBID($request);
+    }
+
     public function searchUsers(Request $request) 
     {
         return $this->userService->searchUsers($request);

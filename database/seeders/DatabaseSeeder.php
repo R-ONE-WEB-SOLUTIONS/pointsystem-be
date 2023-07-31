@@ -57,14 +57,14 @@ class DatabaseSeeder extends Seeder
 
         $business = [
             [
-                'businesse_name' => 'Euphoria',
-                'businesse_address' => 'somewhere',
+                'business_name' => 'Euphoria',
+                'business_address' => 'somewhere',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'businesse_name' => 'Other Business',
-                'businesse_address' => 'somewhere',
+                'business_name' => 'Other Business',
+                'business_address' => 'somewhere',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]

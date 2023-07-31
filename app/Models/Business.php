@@ -12,8 +12,8 @@ class Business extends Model
     use HasFactory;
 
     protected $fillable = [
-        'businesse_name',
-        'businesse_address'
+        'business_name',
+        'business_address'
     ];
 
     public function clients()
