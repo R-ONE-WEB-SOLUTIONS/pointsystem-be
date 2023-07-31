@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Validator;
 class PreRegController extends Controller
 {
     
-    public function index()
-    {
+    public function index(){
+
         $pre_reg = PreReg::leftJoin('client_types', 'pre_regs.client_type_id', '=', 'client_types.id')
                     ->leftJoin('businesses', 'pre_regs.business_id', '=', 'businesses.id')
                     ->select('pre_regs.*', 'client_types.client_type', 'businesses.business_name')
@@ -59,8 +59,8 @@ class PreRegController extends Controller
     }
 
     
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -83,14 +83,38 @@ class PreRegController extends Controller
     }
 
     
-    public function show($id)
-    {
+    public function show($id){
         //
     }
 
+    public function update(Request $request, $id){
+        $pre_reg = PreReg::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'first_name' => 'string|max:255',
+            'last_name' => 'string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'extension_name' => 'nullable|string|max:255',
+            'email' => 'email',
+            'phone_number' => 'string|max:20',
+            'address' => 'string|max:255',
+            'client_type_id' => 'integer'
+        ]);
+
+        // Filter out only the columns that are present in the validated data
+        $fillableData = array_filter($validatedData, function ($value) {
+            return $value !== null;
+        });
+
+        $pre_reg->update($fillableData);
+
+        return response()->json([
+            'message' => 'Pre Reg info updated successfully.',
+            'pre_reg' => $pre_reg
+        ]);
+    }
     
-    public function update(Request $request, $id)
-    {
+    public function approvePreReg(Request $request, $id){
         $preClient = PreReg::findOrFail($id);
         
 
@@ -127,8 +151,13 @@ class PreRegController extends Controller
     }
 
     
-    public function destroy($id)
-    {
-        //
+    public function destroy($id){
+        $pre_reg = PreReg::findOrFail($id);
+    
+        $pre_reg->delete();
+
+        return response()->json([
+            'message' => 'Pre Register Client deleted successfully.'
+        ],200);
     }
 }
