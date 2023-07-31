@@ -13,10 +13,49 @@ class PreRegController extends Controller
     
     public function index()
     {
-        $pre_reg = PreReg::all();
+        $pre_reg = PreReg::leftJoin('client_types', 'pre_regs.client_type_id', '=', 'client_types.id')
+                    ->leftJoin('businesses', 'pre_regs.business_id', '=', 'businesses.id')
+                    ->select('pre_regs.*', 'client_types.client_type', 'businesses.business_name')
+                    ->get();
+
+        if ($pre_reg->isEmpty()) {
+            return response()->json(['message' => 'No PreClient found'], 200);
+        }
         return response()->json([
             'pre_reg' => $pre_reg
         ]);
+    }
+
+    public function viewAllPreReg(Request $request){
+        
+        if($request->business_id != null){
+           
+            $pre_reg = PreReg::where('business_id', '=', $request->business_id)
+                ->leftJoin('client_types', 'pre_regs.client_type_id', '=', 'client_types.id')
+                ->leftJoin('businesses', 'pre_regs.business_id', '=', 'businesses.id')
+                ->select('pre_regs.*', 'client_types.client_type', 'businesses.business_name')
+                ->get();
+
+            if ($pre_reg->isEmpty()) {
+                return response()->json(['message' => 'No PreClient found'], 200);
+            }
+            return response()->json([
+                'pre_reg' => $pre_reg
+            ]);
+
+        }else{
+            
+            $pre_reg = PreReg::leftJoin('client_types', 'pre_regs.client_type_id', '=', 'client_types.id')
+                    ->leftJoin('businesses', 'pre_regs.business_id', '=', 'businesses.id')
+                    ->select('pre_regs.*', 'client_types.client_type', 'businesses.business_name')
+                    ->get();
+            if ($pre_reg->isEmpty()) {
+                return response()->json(['message' => 'No PreClient found'], 200);
+            }
+            return response()->json([
+                'pre_reg' => $pre_reg
+            ]);
+        }
     }
 
     
