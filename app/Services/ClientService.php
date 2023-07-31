@@ -28,17 +28,17 @@ class ClientService {
 
     public function viewAllClients($request) {
         if($request->business_id != null){
-            $users = Client::where('business_id', '=', $request->business_id)
+            $clients = Client::where('business_id', '=', $request->business_id)
             ->leftJoin('client_types', 'clients.client_type_id', '=', 'client_types.id')
             ->leftJoin('businesses', 'clients.business_id', '=', 'businesses.id')
             ->select('clients.*', 'client_types.client_type', 'businesses.business_name')
             ->get();
 
-            if ($users->isEmpty()) {
-                return response()->json(['message' => 'No users found'], 200);
+            if ($clients->isEmpty()) {
+                return response()->json(['message' => 'No Clients found'], 200);
             }
 
-            return response()->json($users, 200);
+            return response()->json($clients, 200);
         }else{
             $clients = Client::leftJoin('client_types', 'clients.client_type_id', '=', 'client_types.id')
             ->leftJoin('businesses', 'clients.business_id', '=', 'businesses.id')
@@ -46,7 +46,7 @@ class ClientService {
             ->get();
 
             if ($clients->isEmpty()) {
-                return response()->json(['message' => 'No Client found'], 200);
+                return response()->json(['message' => 'No Clients found'], 200);
             }
 
             return response()->json($clients, 200);
@@ -62,7 +62,7 @@ class ClientService {
             'last_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'extension_name' => 'nullable|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:clients',
             'phone_number' => 'required|string|max:11',
             'address' => 'required|string|max:255',
             'client_type_id' => 'required',
@@ -109,17 +109,6 @@ class ClientService {
 
         return response()->json(['clients' => $clients], 200);
        
-    }
-
-    public function viewUser($id) {
-
-        $client = Client::findOrFail($id);
-
-        if (!$client) {
-            return response()->json(['error' => 'Client not found'], 404);
-        }
-
-        return response()->json(['client' => $client], 200);
     }
 
     public function editClient($request, $id) {

@@ -37,7 +37,7 @@ class PreRegController extends Controller
                 ->get();
 
             if ($pre_reg->isEmpty()) {
-                return response()->json(['message' => 'No PreClient found'], 200);
+                return response()->json(['message' => 'No Pre Client found'], 200);
             }
             return response()->json([
                 'pre_reg' => $pre_reg
@@ -50,7 +50,7 @@ class PreRegController extends Controller
                     ->select('pre_regs.*', 'client_types.client_type', 'businesses.business_name')
                     ->get();
             if ($pre_reg->isEmpty()) {
-                return response()->json(['message' => 'No PreClient found'], 200);
+                return response()->json(['message' => 'No Pre Client found'], 200);
             }
             return response()->json([
                 'pre_reg' => $pre_reg
