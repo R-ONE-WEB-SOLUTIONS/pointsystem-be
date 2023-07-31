@@ -90,7 +90,11 @@ class UserService {
     
     public function viewUser($id) {
 
-        $user = User::find($id);
+        $user = User::where('users.id', '=', $id)
+        ->leftJoin('user_types', 'users.user_type_id', '=', 'user_types.id')
+        ->leftJoin('businesses', 'users.business_id', '=', 'businesses.id')
+        ->select('users.*', 'user_types.user_type', 'businesses.business_name')
+        ->first();;
 
         if (!$user) {
             return response()->json(['error' => 'User not found'], 404);

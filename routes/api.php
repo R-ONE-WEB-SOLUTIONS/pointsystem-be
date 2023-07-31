@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     //User
     Route::apiResource('users', UserController::class);
     Route::get('/searchUsers', [UserController::class, 'searchUsers']);
+    
     Route::post('/viewAllUsers',[UserController::class, 'viewAllUsers']);
 
     //Pre Reg
