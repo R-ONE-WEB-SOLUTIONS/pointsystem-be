@@ -38,8 +38,8 @@ class AuthController extends Controller
     }
 
 
-    public function destroy($id)
+    public function logout()
     {
-        //
+        return $this->authService->logout();
     }
 }

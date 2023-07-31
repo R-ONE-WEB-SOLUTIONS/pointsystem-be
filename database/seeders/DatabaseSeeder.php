@@ -82,6 +82,7 @@ class DatabaseSeeder extends Seeder
                 'address' => 'Barra Opol',
                 'user_type_id' => 1,
                 'business_id' => null,
+                'roles' => null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -94,6 +95,7 @@ class DatabaseSeeder extends Seeder
                 'address' => 'Balulang',
                 'user_type_id' => 2,
                 'business_id' => 1,
+                'roles' => json_encode(['can_pre_reg']),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -106,6 +108,7 @@ class DatabaseSeeder extends Seeder
                 'address' => 'Barra Opol',
                 'user_type_id' => 2,
                 'business_id' => 2,
+                'roles' => json_encode(['can_pre_reg', 'can_view_transaction']),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]

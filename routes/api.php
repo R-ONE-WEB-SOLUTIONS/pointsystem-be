@@ -17,6 +17,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::apiResource('auth', AuthController::class);
     Route::apiResource('users', UserController::class);
+    Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/searchUsers', [UserController::class, 'searchUsers']);
     Route::apiResource('clients', ClientController::class);
     Route::get('/searchClients', [ClientController::class, 'searchClients']);

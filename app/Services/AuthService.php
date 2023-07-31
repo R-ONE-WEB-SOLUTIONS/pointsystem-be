@@ -42,5 +42,13 @@ class AuthService {
         ]);
     }
 
+    public function logout() {
+        Auth::user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'message' => "You have successfully logout"
+        ]);
+    }
+
 }
 
