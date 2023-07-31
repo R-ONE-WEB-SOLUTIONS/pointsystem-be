@@ -36,9 +36,9 @@ class ClientController extends Controller
         return $this->clientService->viewClient($id);
     }
 
-    public function viewClientsByBID(Request $request)
-    {
-        return $this->clientService->viewClientsByBID($request);
+    public function viewAllClients(Request $request)
+    {   
+        return $this->clientService->viewAllClients($request);
     }
 
     

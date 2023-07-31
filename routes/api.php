@@ -36,7 +36,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     //User
     Route::apiResource('users', UserController::class);
     Route::get('/searchUsers', [UserController::class, 'searchUsers']);
-    Route::post('/viewUsersByBID',[UserController::class, 'viewUsersByBID']);
+    Route::post('/viewAllUsers',[UserController::class, 'viewAllUsers']);
 
     //Pre Reg
     Route::apiResource('preReg', PreRegController::class);
@@ -47,7 +47,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::apiResource('clients', ClientController::class);
     Route::get('/searchClients', [ClientController::class, 'searchClients']);
     Route::put('/activateClient/{client}', [ClientController::class, 'activateClient']);
-    Route::post('/viewClientsByBID',[ClientController::class, 'viewClientsByBID']);
+    Route::post('/viewAllClients',[ClientController::class, 'viewAllClients']);
 
     //Account
     Route::apiResource('accounts', AccountController::class);
