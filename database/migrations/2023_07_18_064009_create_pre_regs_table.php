@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('address');
             $table->unsignedBigInteger('client_type_id');
             $table->unsignedBigInteger('business_id');
+            $table->boolean('registered')->nullable();
             $table->timestamps();
 
             $table->foreign('client_type_id')->references('id')->on('client_types');

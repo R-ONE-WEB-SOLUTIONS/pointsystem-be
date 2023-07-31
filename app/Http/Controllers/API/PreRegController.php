@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Client;
 use App\Models\PreReg;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class PreRegController extends Controller
 {
@@ -20,7 +22,25 @@ class PreRegController extends Controller
     
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'extension_name' => 'nullable|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'phone_number' => 'required|string|max:11',
+            'address' => 'required|string|max:255',
+            'client_type_id' => 'required',
+            'business_id' => 'required',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+    
+        $preClient = PreReg::create($request->all());
+    
+        return response()->json(['message' => 'Client has been pre registered', 'preClient' => $preClient], 200);
     }
 
     
@@ -32,7 +52,39 @@ class PreRegController extends Controller
     
     public function update(Request $request, $id)
     {
-        //
+        $preClient = PreReg::findOrFail($id);
+        
+
+        if($request->registered == 'decline' || $request->registered == 'Decline'){
+            
+            $preClient->update([
+                'registered' => false
+            ]);
+
+            return response()->json(['message' => 'Clients pre registration has been declined', 'preClient' => $preClient], 200);
+
+        }else if($request->registered == 'register' || $request->registered == 'Register'){
+            $data = $preClient->toArray();
+            
+            unset($data['created_at']);
+            unset($data['updated_at']);
+            
+            $data['active'] = 1;
+            
+            $client = Client::create($data);;
+
+            if ($client) {
+                $preClient->update([
+                    'registered' => true
+                ]);
+                return response()->json(['message' => 'Clients pre registration has been confirmed', 'preClient' => $preClient], 200);
+            } else {
+                return response()->json(['message' => 'something went wrong']);
+            }
+
+
+        }
+
     }
 
     

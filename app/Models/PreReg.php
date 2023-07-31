@@ -21,6 +21,7 @@ class PreReg extends Model
         'address',
         'client_type_id',
         'business_id',
+        'registered'
     ];
 
     public function clientType()
