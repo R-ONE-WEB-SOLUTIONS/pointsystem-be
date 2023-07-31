@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\TransactionService;
@@ -34,7 +35,10 @@ class TransactionController extends Controller
     
     public function index()
     {
-        //
+        $transanctions = Transaction::all();
+        return response()->json([
+            'transanctions' => $transanctions
+        ]);
     }
 
     
