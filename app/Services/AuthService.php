@@ -32,7 +32,11 @@ class AuthService {
             return response()->json(['message' => 'Credentials do not match'], 401);
         }
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)
+                ->leftJoin('user_types', 'users.user_type_id', '=', 'user_types.id')
+                ->leftJoin('businesses', 'users.business_id', '=', 'businesses.id')
+                ->select('users.*', 'user_types.user_type', 'businesses.business_name')
+                ->first();
 
         $token = $user->createToken('Api Token for ' . $user->email)->plainTextToken;
 
