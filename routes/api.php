@@ -42,7 +42,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     //Pre Reg
     Route::apiResource('preReg', PreRegController::class);
     Route::post('/viewAllPreReg',[PreRegController::class, 'viewAllPreReg']);
-    Route::put('/approvePreReg',[PreRegController::class, 'approvePreReg']);
+    Route::put('/approvePreReg/{preReg}',[PreRegController::class, 'approvePreReg']);
 
     //Client Type
     Route::apiResource('clientType', ClientTypeController::class);
