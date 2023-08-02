@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     
     public function viewAllUsers(Request $request) 
-    {
+    {   
         if($request->business_id != null){
 
             // search user by business id
@@ -37,6 +37,23 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        // Validate user input
+        $validated = $request->validate([
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'middle_name' => ['nullable', 'string', 'max:255'],
+            'extension_name' => ['nullable', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
+            'phone_number' => ['required', 'string', 'max:11'],
+            'address' => ['required', 'string', 'max:255'],
+            'user_type_id' => ['required'],
+            'business' => ['nullable'],
+            'roles' => ['nullable', 'json'],
+        ]);
+
+        $user = User::create($request->all());
+            
         
     }
 
