@@ -53,11 +53,11 @@ class User extends Authenticatable
 
     public function userType()
     {
-        return $this->belongsTo(UserType::class);
+        return $this->belongsTo(UserType::class, 'user_type_id', 'id');
     }
 
-    public function Business()
+    public function business()
     {
-        return $this->belongsTo(Business::class);
+        return $this->belongsTo(Business::class, 'business_id', 'id');
     }
 }
