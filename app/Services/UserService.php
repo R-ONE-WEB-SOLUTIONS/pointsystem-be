@@ -123,7 +123,7 @@ class UserService {
             ],
             'password' => 'nullable|string|min:6',
             'phone_number' => 'string|max:20',
-            'user_type_id' => 'nullabe',
+            'user_type_id' => 'nullable',
             'business_id' => 'nullable',
             'address' => 'string|max:255',
             'roles' => 'nullable',
