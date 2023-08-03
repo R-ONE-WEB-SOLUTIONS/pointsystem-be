@@ -53,6 +53,14 @@ class UserController extends Controller
         ]);
 
         $user = User::create($request->all());
+        
+        try {
+            $user = User::create($request->all());
+            return response()->json(['message' => 'User created successfully', 'data' => $this->mapuser($users)], 200);
+        } catch (\Exception $e) {
+            // An error occurred during user creation.
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
             
         
     }
