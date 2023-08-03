@@ -120,7 +120,10 @@ class ClientService {
             'last_name' => 'string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'extension_name' => 'nullable|string|max:255',
-            'email' => 'email|unique:clients',
+            'email' => [
+                'email',
+                Rule::unique('clients')->ignore($client, 'id'),
+            ],
             'phone_number' => 'string|max:20',
             'address' => 'string|max:255',
             'active' => 'boolean',
