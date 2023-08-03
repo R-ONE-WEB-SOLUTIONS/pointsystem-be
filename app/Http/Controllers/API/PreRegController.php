@@ -98,15 +98,16 @@ class PreRegController extends Controller
             'email' => 'email',
             'phone_number' => 'string|max:20',
             'address' => 'string|max:255',
-            'client_type_id' => 'integer'
+            'client_type_id' => 'integer',
+            'business_id' => 'required',
         ]);
 
         // Filter out only the columns that are present in the validated data
-        $fillableData = array_filter($validatedData, function ($value) {
-            return $value !== null;
-        });
+        // $fillableData = array_filter($validatedData, function ($value) {
+        //     return $value !== null;
+        // });
 
-        $pre_reg->update($fillableData);
+        $pre_reg->update($validatedData);
 
         return response()->json([
             'message' => 'Pre Reg info updated successfully.',
