@@ -134,7 +134,6 @@ class PreRegService {
             'email' => 'email',
             'phone_number' => 'string|max:20',
             'address' => 'string|max:255',
-            'user_type_id' => 'nullabe',
             'business_id' => 'nullable',
             'active' => 'boolean',
             'client_type_id' => 'integer'
