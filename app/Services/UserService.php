@@ -33,8 +33,11 @@ class UserService {
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
+
+        $data = $request->all();
+        $data['password'] = Hash::make($data['password']);
     
-        $user = User::create($request->all());
+        $user = User::create($data);
     
         return response()->json(['message' => 'User created successfully', 'user' => $user], 200);
 
