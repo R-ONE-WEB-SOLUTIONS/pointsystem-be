@@ -139,7 +139,7 @@ class PreRegController extends Controller
                 ->first();
 
             if ($existingClient) {
-                return response()->json(['message' => 'Email is already in use for the same business type.'], 409);
+                return response()->json(['error' => 'Email is already in use for the same business type.'], 409);
             }
             
             $client = Client::create($data);;
