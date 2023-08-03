@@ -28,7 +28,7 @@ class UserService {
             'address' => 'required|string|max:255',
             'user_type_id' => 'required',
             'business' => 'nullable',
-            'roles' => 'nullable|json',
+            'roles' => 'nullable',
         ]);
     
         if ($validator->fails()) {
