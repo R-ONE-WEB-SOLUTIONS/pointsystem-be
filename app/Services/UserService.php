@@ -116,7 +116,10 @@ class UserService {
             'last_name' => 'string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'extension_name' => 'nullable|string|max:255',
-            'email' => 'email|unique:clients',
+            'email' => [
+                'email',
+                Rule::unique('users')->ignore($user, 'id'),
+            ],
             'password' => 'nullable|string|min:6',
             'phone_number' => 'string|max:20',
             'address' => 'string|max:255',
