@@ -114,7 +114,7 @@ class PreRegController extends Controller
         ]);
     }
     
-    public function approvePreReg(Request $request, $id){
+    public function applicantStatus(Request $request, $id){
         $preClient = PreReg::findOrFail($id);
 
         if($request->registered == 'decline' || $request->registered == 'Decline'){
