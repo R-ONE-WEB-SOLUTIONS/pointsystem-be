@@ -132,6 +132,15 @@ class PreRegController extends Controller
             unset($data['updated_at']);
             
             $data['active'] = 1;
+
+            // Check if the email is already in use for the same business type
+            $existingClient = Client::where('email', $data['email'])
+                ->where('business_id', $data['business_id'])
+                ->first();
+
+            if ($existingClient) {
+                return response()->json(['message' => 'Email is already in use for the same business type.'], 409);
+            }
             
             $client = Client::create($data);;
 
