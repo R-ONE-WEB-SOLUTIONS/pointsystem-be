@@ -120,7 +120,7 @@ class ClientService {
             'last_name' => 'string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'extension_name' => 'nullable|string|max:255',
-            'email' => 'email',
+            'email' => 'email|unique:clients',
             'phone_number' => 'string|max:20',
             'address' => 'string|max:255',
             'active' => 'boolean',
