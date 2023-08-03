@@ -130,9 +130,9 @@ class UserService {
         ]);
 
         // Filter out only the columns that are present in the validated data
-        $fillableData = array_filter($validatedData, function ($value) {
-            return $value !== null;
-        });
+        // $fillableData = array_filter($validatedData, function ($value) {
+        //     return $value !== null;
+        // });
 
         $user->update($fillableData);
 
