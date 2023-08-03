@@ -123,8 +123,10 @@ class UserService {
             ],
             'password' => 'nullable|string|min:6',
             'phone_number' => 'string|max:20',
+            'user_type_id' => 'nullabe',
+            'business_id' => 'nullable',
             'address' => 'string|max:255',
-            'roles' => 'nullable|json',
+            'roles' => 'nullable',
         ]);
 
         // Filter out only the columns that are present in the validated data
