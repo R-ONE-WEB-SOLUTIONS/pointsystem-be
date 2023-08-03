@@ -134,7 +134,7 @@ class UserService {
         //     return $value !== null;
         // });
 
-        $user->update($fillableData);
+        $user->update($validatedData);
 
         return response()->json([
             'message' => 'User updated successfully.',
