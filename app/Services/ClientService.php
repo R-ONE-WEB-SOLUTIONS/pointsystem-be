@@ -136,7 +136,7 @@ class ClientService {
         //     return $value !== null;
         // });
 
-        $client->update($fillableData);
+        $client->update($validatedData);
 
         return response()->json([
             'message' => 'Client updated successfully.',

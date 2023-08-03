@@ -141,11 +141,11 @@ class PreRegService {
         ]);
 
         // Filter out only the columns that are present in the validated data
-        $fillableData = array_filter($validatedData, function ($value) {
-            return $value !== null;
-        });
+        // $fillableData = array_filter($validatedData, function ($value) {
+        //     return $value !== null;
+        // });
 
-        $client->update($fillableData);
+        $client->update($validatedData);
 
         return response()->json([
             'message' => 'Client updated successfully.',
