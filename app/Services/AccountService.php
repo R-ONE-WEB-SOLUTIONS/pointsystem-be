@@ -37,11 +37,11 @@ class AccountService {
             ->select('accounts.*', 'client_types.client_type', 'businesses.business_name')
             ->get();
 
-            if ($clients->isEmpty()) {
+            if ($Accounts->isEmpty()) {
                 return response()->json(['message' => 'No Clients found'], 200);
             }
 
-            return response()->json($clients, 200);
+            return response()->json($Accounts, 200);
         }else{
             $Accounts = Account::join('clients', 'clients.id', '=', 'client_id')
             ->join('client_types', 'client_types.id', '=', 'clients.client_type_id')
