@@ -6,7 +6,7 @@ use App\Models\Client;
 use App\Models\Account;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
-use App\Rules\UniqueEmailForBusiness;
+use App\Rules\CreateClientValidation;
 use App\Rules\UpdateClientValidation;
 
 
@@ -70,7 +70,7 @@ class ClientService {
                 'string',
                 'email',
                 'max:255',
-                new UniqueEmailForBusiness($request->business_id),
+                new CreateClientValidation($request->business_id),
             ],
             'phone_number' => 'required|string|max:11',
             'address' => 'required|string|max:255',

@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\DB;
-class UniqueEmailForBusinessPreReg implements Rule
+class CreatePreRegValidation implements Rule
 {
     private $businessId;
 
