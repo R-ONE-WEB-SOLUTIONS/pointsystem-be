@@ -162,7 +162,7 @@ class PreRegController extends Controller
                     $preClient->update([
                         'registered' => true
                     ]);
-                $createClientAccount($client->id);
+                $this->createClientAccount($client->id);
 
                     
                     return response()->json(['message' => 'Clients pre registration has been confirmed', 'preClient' => $preClient], 200);
