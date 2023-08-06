@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\Client;
 use App\Models\PreReg;
 use Illuminate\Http\Request;
