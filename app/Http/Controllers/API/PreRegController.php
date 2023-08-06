@@ -165,7 +165,7 @@ class PreRegController extends Controller
                         ]);
                 $this->createClientAccount($client->id);
 
-                    
+                return true;
                
                  });
 
