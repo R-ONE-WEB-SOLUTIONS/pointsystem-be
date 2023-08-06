@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 
 class AccountController extends Controller
 {
-    
+    private $accountService;
     public function index()
     {
         $account = Account::all();
