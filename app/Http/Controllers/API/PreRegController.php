@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Rules\CreatePreRegValidation;
 use App\Rules\UpdatePreRegValidation;
 use Illuminate\Validation\Rule;
+use App\Models\Account;
 
 class PreRegController extends Controller
 {
@@ -156,7 +157,7 @@ class PreRegController extends Controller
                 return response()->json(['error' => 'Email is already in use for the same business type.'], 409);
             }
             $result = DB::transaction(function () use ($data, $preClient){
-                $client = Client::create($data);;
+                $client = Client::create($data);
 
                
                 $preClient->update([
