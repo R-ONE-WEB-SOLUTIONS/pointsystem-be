@@ -136,7 +136,8 @@ class ClientService {
             'phone_number' => 'string|max:20',
             'address' => 'string|max:255',
             'active' => 'boolean',
-            'client_type_id' => 'integer'
+            'client_type_id' => 'integer',
+            'business_id' => 'required',
         ]);
 
         // Filter out only the columns that are present in the validated data
