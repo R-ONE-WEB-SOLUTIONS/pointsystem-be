@@ -155,7 +155,7 @@ class PreRegController extends Controller
             if ($existingClient) {
                 return response()->json(['error' => 'Email is already in use for the same business type.'], 409);
             }
-            DB::transaction(function () use ($data){
+            DB::transaction(function () use ($data, $preClient){
                 $client = Client::create($data);;
 
                 if ($client) {
