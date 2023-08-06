@@ -7,7 +7,7 @@ use App\Models\PreReg;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-
+use App\Rules\UniqueEmailForBusinessPreReg;
 class PreRegController extends Controller
 {
     
@@ -66,7 +66,13 @@ class PreRegController extends Controller
             'last_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'extension_name' => 'nullable|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                new UniqueEmailForBusinessPreReg($request->business_id),
+            ],
             'phone_number' => 'required|string|max:11',
             'address' => 'required|string|max:255',
             'client_type_id' => 'required',
@@ -95,7 +101,11 @@ class PreRegController extends Controller
             'last_name' => 'string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'extension_name' => 'nullable|string|max:255',
-            'email' => 'email',
+            'email' => [
+                'email',
+                Rule::unique('pre_regs')->ignore($pre_reg, 'id'),
+                new UniqueEmailForBusinessPreReg($request->business_id),
+            ],
             'phone_number' => 'string|max:20',
             'address' => 'string|max:255',
             'client_type_id' => 'integer',

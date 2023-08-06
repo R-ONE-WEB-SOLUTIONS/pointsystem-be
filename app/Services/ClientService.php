@@ -131,6 +131,7 @@ class ClientService {
             'email' => [
                 'email',
                 Rule::unique('clients')->ignore($client, 'id'),
+                new UniqueEmailForBusiness($request->business_id),
             ],
             'phone_number' => 'string|max:20',
             'address' => 'string|max:255',
