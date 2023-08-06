@@ -5,7 +5,7 @@ namespace App\Rules;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
-class UniqueEmailForBusiness implements Rule
+class CreateClientValidation implements Rule
 {
     private $businessId;
 
