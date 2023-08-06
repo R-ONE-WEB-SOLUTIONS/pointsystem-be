@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Rules\CreatePreRegValidation;
 use App\Rules\UpdatePreRegValidation;
 use Illuminate\Validation\Rule;
-use App\Services\ClientService;
+
 class PreRegController extends Controller
 {
     
@@ -129,7 +129,7 @@ class PreRegController extends Controller
     
     public function applicantStatus(Request $request, $id){
         $preClient = PreReg::findOrFail($id);
-        $clientService = new ClientService();
+        
 
         if($request->registered == 'decline' || $request->registered == 'Decline'){
             
