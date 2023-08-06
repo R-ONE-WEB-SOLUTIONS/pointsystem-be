@@ -7,6 +7,7 @@ use App\Models\Account;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\UniqueEmailForBusiness;
+use App\Rules\UpdateClientValidation;
 
 
 class ClientService {
@@ -130,8 +131,7 @@ class ClientService {
             'extension_name' => 'nullable|string|max:255',
             'email' => [
                 'email',
-                Rule::unique('clients')->ignore($client, 'id'),
-                new UniqueEmailForBusiness($request->business_id),
+                new UpdateClientValidation($request->id,$request->business_id),
             ],
             'phone_number' => 'string|max:20',
             'address' => 'string|max:255',
