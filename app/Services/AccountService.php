@@ -30,7 +30,7 @@ class AccountService {
     public function viewAllAccounts($request) {
         if($request->business_id != null){
             $Accounts = Account::
-            join('clients', 'clients.id', '=', 'accounts.client_id')
+            join('clients', 'clients.id', '=', 'client_id')
             ->join('client_types', 'client_types.id', '=', 'clients.client_type_id')
             ->join('businesses', $request->business_id, '=', 'businesses.id')
             ->where('clients.business_id', $request->business_id)
@@ -43,7 +43,7 @@ class AccountService {
 
             return response()->json($clients, 200);
         }else{
-            $Accounts = Account::join('clients', 'clients.id', '=', 'accounts.client_id')
+            $Accounts = Account::join('clients', 'clients.id', '=', 'client_id')
             ->join('client_types', 'client_types.id', '=', 'clients.client_type_id')
             ->join('businesses', $request->business_id, '=', 'businesses.id')
             ->select('clients.*', 'client_types.client_type', 'businesses.business_name')
