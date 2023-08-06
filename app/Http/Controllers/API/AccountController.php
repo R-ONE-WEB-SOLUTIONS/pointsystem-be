@@ -10,6 +10,9 @@ use App\Http\Controllers\Controller;
 class AccountController extends Controller
 {
     private $accountService;
+    public function __construct(AccountService $accountService){
+        $this->accountService = $accountService;
+    }
     public function index()
     {
         $account = Account::all();
