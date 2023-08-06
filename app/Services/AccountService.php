@@ -32,7 +32,7 @@ class AccountService {
             $Accounts = Account::
             join('clients', 'clients.id', '=', 'client_id')
             ->join('client_types', 'client_types.id', '=', 'clients.client_type_id')
-            ->join('businesses', $request->business_id, '=', 'businesses.id')
+            ->join('businesses', 'businesses.id', '=', 'clients.business_id')
             ->where('clients.business_id', $request->business_id)
             ->select('accounts.*', 'client_types.client_type', 'businesses.business_name')
             ->get();
@@ -45,7 +45,7 @@ class AccountService {
         }else{
             $Accounts = Account::join('clients', 'clients.id', '=', 'client_id')
             ->join('client_types', 'client_types.id', '=', 'clients.client_type_id')
-            ->join('businesses', $request->business_id, '=', 'businesses.id')
+            ->join('businesses', 'businesses.id', '=', 'clients.business_id')
             ->select('clients.*', 'client_types.client_type', 'businesses.business_name')
             ->get();
 
