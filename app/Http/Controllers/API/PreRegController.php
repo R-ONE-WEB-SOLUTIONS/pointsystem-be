@@ -155,23 +155,24 @@ class PreRegController extends Controller
             if ($existingClient) {
                 return response()->json(['error' => 'Email is already in use for the same business type.'], 409);
             }
-            DB::transaction(function () use ($data, $preClient){
+            $result = DB::transaction(function () use ($data, $preClient){
                 $client = Client::create($data);;
 
-                if ($client) {
-                    $preClient->update([
+               
+                $preClient->update([
                         'registered' => true
-                    ]);
+                        ]);
                 $this->createClientAccount($client->id);
 
                     
-                    return response()->json(['message' => 'Clients pre registration has been confirmed', 'preClient' => $preClient], 200);
-                } else {
-                    return response()->json(['message' => 'something went wrong']);
-                }
+               
                  });
 
-            
+                 if ($result) {
+                    return response()->json(['message' => 'Clients pre-registration has been confirmed', 'preClient' => $preClient], 200);
+                } else {
+                    return response()->json(['message' => 'Something went wrong upon saving. Execute Rollback'], 500);
+                }
 
         
 
