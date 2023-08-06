@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\UniqueEmailForBusinessPreReg;
+use Illuminate\Validation\Rule;
 class PreRegController extends Controller
 {
     
