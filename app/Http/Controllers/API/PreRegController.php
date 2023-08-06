@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Rules\CreatePreRegValidation;
 use App\Rules\UpdatePreRegValidation;
 use Illuminate\Validation\Rule;
+use App\Services\ClientService;
 class PreRegController extends Controller
 {
     
@@ -128,6 +129,7 @@ class PreRegController extends Controller
     
     public function applicantStatus(Request $request, $id){
         $preClient = PreReg::findOrFail($id);
+        $clientService = new ClientService();
 
         if($request->registered == 'decline' || $request->registered == 'Decline'){
             
@@ -153,24 +155,40 @@ class PreRegController extends Controller
             if ($existingClient) {
                 return response()->json(['error' => 'Email is already in use for the same business type.'], 409);
             }
+            DB::transaction(function () {
+                $client = Client::create($data);;
+
+                if ($client) {
+                    $preClient->update([
+                        'registered' => true
+                    ]);
+                $createClientAccount($client->id);
+
+                    
+                    return response()->json(['message' => 'Clients pre registration has been confirmed', 'preClient' => $preClient], 200);
+                } else {
+                    return response()->json(['message' => 'something went wrong']);
+                }
+                 });
+
             
-            $client = Client::create($data);;
 
-            if ($client) {
-                $preClient->update([
-                    'registered' => true
-                ]);
-                return response()->json(['message' => 'Clients pre registration has been confirmed', 'preClient' => $preClient], 200);
-            } else {
-                return response()->json(['message' => 'something went wrong']);
-            }
-
+        
 
         }
 
     }
 
-    
+    private function createClientAccount($clientId){
+
+        $accountNumber =  date("Ymd",time()) . '_'. $client->id;
+
+        $account = Account::create([
+            'client_id' => $clientId,
+            'account_number' => $accountNumber,
+            'current_balance' => 0,
+        ]);
+    }
     public function destroy($id){
         $pre_reg = PreReg::findOrFail($id);
     
