@@ -182,7 +182,7 @@ class PreRegController extends Controller
 
     private function createClientAccount($clientId){
 
-        $accountNumber =  date("Ymd",time()) . '_'. $client->id;
+        $accountNumber =  date("Ymd",time()) . '_'. $clientId;
 
         $account = Account::create([
             'client_id' => $clientId,
