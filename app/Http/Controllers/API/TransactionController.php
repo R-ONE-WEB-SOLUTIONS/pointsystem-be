@@ -50,7 +50,16 @@ class TransactionController extends Controller
     
     public function show($id)
     {
-        //
+        $transactions = Transaction::where('account_id', '=', $id)->get();
+
+        if($transactions->isEmpty()){
+            return response()->json(['message' => 'No transactions found'], 200);
+        }else{
+            return response()->json(['message' => 'transactions found', 'transactions' => $transactions], 200);
+        }
+
+        
+
     }
 
     
