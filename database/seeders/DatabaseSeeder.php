@@ -188,7 +188,7 @@ class DatabaseSeeder extends Seeder
             [    
                 'account_number' => date("Ymd",time()) .'_'. 100000002,
                 'client_id' => 100000002,
-                'current_balance' => 0.00,
+                'current_balance' => 20.00,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
@@ -224,7 +224,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
             [
-                'reference_id' => 1 . '_' . time(),
+                'reference_id' => 2 . '_' . time(),
                 'reciept_number' => '123123123123',
                 'reciept_amount' => 1000.00,
                 'points' => 10.00,
@@ -232,6 +232,19 @@ class DatabaseSeeder extends Seeder
                 'account_id' => 1,
                 'transaction_type' => 'Reward Points',
                 'previous_balance' => 20.00,
+                'void' => false,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'reference_id' => 3 . '_' . time(),
+                'reciept_number' => '123123123124',
+                'reciept_amount' => 1000.00,
+                'points' => 10.00,
+                'user_id' => 2,
+                'account_id' => 2,
+                'transaction_type' => 'Reward Points',
+                'previous_balance' => 0.00,
                 'void' => false,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()

@@ -37,8 +37,44 @@ class TransactionController extends Controller
     {
         $transanctions = Transaction::all();
         return response()->json([
+            'message' => 'transactions found',
             'transanctions' => $transanctions
-        ]);
+        ],200);
+    }
+
+    public function viewAllTransactions(Request $request)
+    {
+        if($request->business_id != null){
+
+            $transactions = Transaction::select('transactions.*', 'businesses.id as business_id', 'businesses.business_name as business_name')
+                            ->join('accounts', 'transactions.account_id', '=', 'accounts.id')
+                            ->join('clients', 'accounts.client_id', '=', 'clients.id')
+                            ->join('businesses', 'clients.business_id', '=', 'businesses.id')
+                            ->where('businesses.id', $request->business_id)
+                            ->get();
+            
+            if($transactions->isEmpty()){
+                return response()->json(['message' => 'No transactions found'], 200);
+            }else{
+                return response()->json(['message' => 'transactions found', 'transactions' => $transactions], 200);
+            }
+            
+
+        }else{
+            $transactions = Transaction::select('transactions.*', 'businesses.id as business_id', 'businesses.business_name as business_name')
+                            ->join('accounts', 'transactions.account_id', '=', 'accounts.id')
+                            ->join('clients', 'accounts.client_id', '=', 'clients.id')
+                            ->join('businesses', 'clients.business_id', '=', 'businesses.id')
+                            ->get();
+
+            if($transactions->isEmpty()){
+                return response()->json(['message' => 'No transactions found'], 200);
+            }else{
+                return response()->json(['message' => 'transactions found', 'transactions' => $transactions], 200);
+            }
+
+        }
+        
     }
 
     

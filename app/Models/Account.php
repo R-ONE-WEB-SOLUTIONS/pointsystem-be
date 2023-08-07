@@ -19,4 +19,14 @@ class Account extends Model
     protected $casts = [
         'current_balance' => 'float',
     ];
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'client_id');
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'account_id');
+    }
 }

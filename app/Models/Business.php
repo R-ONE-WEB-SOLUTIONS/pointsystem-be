@@ -17,10 +17,10 @@ class Business extends Model
         'business_address'
     ];
 
-    public function clients()
-    {
-        return $this->hasMany(Client::class);
-    }
+    // public function clients()
+    // {
+    //     return $this->hasMany(Client::class);
+    // }
 
     public function preRegs()
     {
@@ -30,5 +30,10 @@ class Business extends Model
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function clients()
+    {
+        return $this->hasMany(Client::class, 'business_id');
     }
 }

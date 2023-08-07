@@ -28,8 +28,13 @@ class Client extends Model
         return $this->belongsTo(ClientType::class);
     }
 
-    public function Business()
+    public function business()
     {
-        return $this->belongsTo(Business::class);
+        return $this->belongsTo(Business::class, 'business_id');
+    }
+
+    public function accounts()
+    {
+        return $this->hasMany(Account::class, 'client_id');
     }
 }

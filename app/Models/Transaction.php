@@ -22,14 +22,19 @@ class Transaction extends Model
         'void'
     ];
 
-    public function AccountID()
-    {
-        return $this->belongsTo(Account::class);
-    }
+    // public function AccountID()
+    // {
+    //     return $this->belongsTo(Account::class);
+    // }
 
     public function UserID()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class, 'account_id');
     }
 
 
