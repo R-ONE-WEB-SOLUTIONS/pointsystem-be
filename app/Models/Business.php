@@ -36,4 +36,9 @@ class Business extends Model
     {
         return $this->hasMany(Client::class, 'business_id');
     }
+
+    public function pointCalculation()
+    {
+        return $this->hasMany(PointCalculation::class, 'business_id');
+    }
 }

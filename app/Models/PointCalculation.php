@@ -12,4 +12,9 @@ class PointCalculation extends Model
     protected $casts = [
         'multiplier' => 'float',
     ];
+
+    public function Business()
+    {
+        return $this->belongsTo(Business::class,'business_id');
+    }
 }

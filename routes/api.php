@@ -66,4 +66,5 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     //Point Calculation
     Route::apiResource('pointCalculation', PointCalculationController::class);
+    Route::post('/viewPointCalculationByBusiness', [PointCalculationController::class, 'viewPointCalculationByBusiness']);
 });
