@@ -18,7 +18,10 @@ return new class extends Migration
             $table->float('base_amount');
             $table->float('points_per_base_amount');
             $table->float('multiplier');
+            $table->unsignedBigInteger('business_id');
             $table->timestamps();
+
+            $table->foreign('business_id')->references('id')->on('businesses');
         });
     }
 

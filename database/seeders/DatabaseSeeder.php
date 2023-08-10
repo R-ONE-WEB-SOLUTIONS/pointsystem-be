@@ -202,6 +202,15 @@ class DatabaseSeeder extends Seeder
                 'base_amount' => 200.00,
                 'points_per_base_amount' => 2,
                 'multiplier' => 0.01,
+                'business_id' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'base_amount' => 200.00,
+                'points_per_base_amount' => 3,
+                'multiplier' => 0.015,
+                'business_id' => 2,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
