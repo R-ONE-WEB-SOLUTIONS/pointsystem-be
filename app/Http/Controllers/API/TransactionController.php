@@ -46,7 +46,7 @@ class TransactionController extends Controller
     {
         if($request->business_id != null){
 
-            $transactions = Transaction::select('transactions.*', 'businesses.id as business_id', 'businesses.business_name as business_name')
+            $transactions = Transaction::select('transactions.*','clients.first_name','clients.middle_name','clients.last_name', 'businesses.id as business_id', 'businesses.business_name as business_name')
                             ->join('accounts', 'transactions.account_id', '=', 'accounts.id')
                             ->join('clients', 'accounts.client_id', '=', 'clients.id')
                             ->join('businesses', 'clients.business_id', '=', 'businesses.id')
@@ -61,7 +61,7 @@ class TransactionController extends Controller
             
 
         }else{
-            $transactions = Transaction::select('transactions.*', 'businesses.id as business_id', 'businesses.business_name as business_name')
+            $transactions = Transaction::select('transactions.*', 'clients.first_name','clients.middle_name','clients.last_name','businesses.id as business_id', 'businesses.business_name as business_name')
                             ->join('accounts', 'transactions.account_id', '=', 'accounts.id')
                             ->join('clients', 'accounts.client_id', '=', 'clients.id')
                             ->join('businesses', 'clients.business_id', '=', 'businesses.id')
