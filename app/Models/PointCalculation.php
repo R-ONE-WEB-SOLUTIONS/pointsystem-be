@@ -13,6 +13,12 @@ class PointCalculation extends Model
         'multiplier' => 'float',
     ];
 
+    protected $fillable = [
+        'base_amount',
+        'points_per_base_amount',
+        'multiplier'
+    ];
+
     public function Business()
     {
         return $this->belongsTo(Business::class,'business_id');
