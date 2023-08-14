@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Carbon\Carbon;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -52,29 +53,27 @@ class TransactionController extends Controller
                             ->join('client_types', 'client_types.id', '=', 'clients.client_type_id')
                             ->join('businesses', 'clients.business_id', '=', 'businesses.id')
                             ->where('businesses.id', $request->business_id)
+                            ->orderBy('transactions.created_at', 'asc')
                             ->get();
             
-            if($transactions->isEmpty()){
-                return response()->json(['message' => 'No transactions found'], 200);
-            }else{
-                return response()->json(['message' => 'transactions found', 'transactions' => $transactions], 200);
-            }
-            
-
         }else{
             $transactions = Transaction::select('transactions.*','client_types.client_type', 'clients.first_name','clients.middle_name','clients.last_name','businesses.id as business_id', 'businesses.business_name as business_name')
                             ->join('accounts', 'transactions.account_id', '=', 'accounts.id')
                             ->join('clients', 'accounts.client_id', '=', 'clients.id')
                             ->join('client_types', 'client_types.id', '=', 'clients.client_type_id')
                             ->join('businesses', 'clients.business_id', '=', 'businesses.id')
+                            ->orderBy('transactions.created_at', 'asc')
                             ->get();
+            
+        }
 
-            if($transactions->isEmpty()){
-                return response()->json(['message' => 'No transactions found'], 200);
-            }else{
-                return response()->json(['message' => 'transactions found', 'transactions' => $transactions], 200);
-            }
+        
 
+        if($transactions->isEmpty()){
+            return response()->json(['message' => 'No transactions found'], 200);
+        }else{
+            
+            return response()->json(['message' => 'transactions found', 'transactions' => $transactions], 200);
         }
         
     }
