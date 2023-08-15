@@ -35,25 +35,25 @@ class ClientService {
             ->leftJoin('client_types', 'clients.client_type_id', '=', 'client_types.id')
             ->leftJoin('businesses', 'clients.business_id', '=', 'businesses.id')
             ->join('accounts', 'clients.id', '=', 'accounts.client_id')
-            ->select(DB::raw("MD5(accounts.account_number) as hashed_account_number"),'clients.*', 'client_types.client_type', 'businesses.business_name')
+            ->select('accounts.account_number','clients.*', 'client_types.client_type', 'businesses.business_name')
             ->get();
 
             if ($clients->isEmpty()) {
                 return response()->json(['message' => 'No Clients found'], 200);
             }
-
+            $clients->account_number = Hash::make($clients->account_number);
             return response()->json($clients, 200);
         }else{
             $clients = Client::leftJoin('client_types', 'clients.client_type_id', '=', 'client_types.id')
             ->leftJoin('businesses', 'clients.business_id', '=', 'businesses.id')
             ->join('accounts', 'clients.id', '=', 'accounts.client_id')
-            ->select(DB::raw("MD5(accounts.account_number) as hashed_account_number"),'clients.*', 'client_types.client_type', 'businesses.business_name')
+            ->select('accounts.account_number','clients.*', 'client_types.client_type', 'businesses.business_name')
             ->get();
 
             if ($clients->isEmpty()) {
                 return response()->json(['message' => 'No Clients found'], 200);
             }
-
+            $clients->account_number = Hash::make($clients->account_number);
             return response()->json($clients, 200);
         }
         
