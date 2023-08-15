@@ -34,7 +34,8 @@ class ClientService {
             $clients = Client::where('business_id', '=', $request->business_id)
             ->leftJoin('client_types', 'clients.client_type_id', '=', 'client_types.id')
             ->leftJoin('businesses', 'clients.business_id', '=', 'businesses.id')
-            ->select('clients.*', 'client_types.client_type', 'businesses.business_name')
+            ->join('accounts', 'clients.id', '=', 'accounts.client_id')
+            ->select(DB::raw("MD5(accounts.account_number) as hashed_account_number"),'clients.*', 'client_types.client_type', 'businesses.business_name')
             ->get();
 
             if ($clients->isEmpty()) {
@@ -45,7 +46,8 @@ class ClientService {
         }else{
             $clients = Client::leftJoin('client_types', 'clients.client_type_id', '=', 'client_types.id')
             ->leftJoin('businesses', 'clients.business_id', '=', 'businesses.id')
-            ->select('clients.*', 'client_types.client_type', 'businesses.business_name')
+            ->join('accounts', 'clients.id', '=', 'accounts.client_id')
+            ->select(DB::raw("MD5(accounts.account_number) as hashed_account_number"),'clients.*', 'client_types.client_type', 'businesses.business_name')
             ->get();
 
             if ($clients->isEmpty()) {
