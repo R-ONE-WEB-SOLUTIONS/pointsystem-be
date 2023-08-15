@@ -42,7 +42,7 @@ class ClientService {
             if ($clients->isEmpty()) {
                 return response()->json(['message' => 'No Clients found'], 200);
             }
-            $clients->account_number = Hash::make($clients->account_number);
+            $clients['account_number'] = Hash::make($clients['account_number']);
             return response()->json($clients, 200);
         }else{
             $clients = Client::leftJoin('client_types', 'clients.client_type_id', '=', 'client_types.id')
@@ -54,7 +54,7 @@ class ClientService {
             if ($clients->isEmpty()) {
                 return response()->json(['message' => 'No Clients found'], 200);
             }
-            $clients->account_number = Hash::make($clients->account_number);
+            $clients['account_number']  = Hash::make($clients['account_number']);
             return response()->json($clients, 200);
         }
         
