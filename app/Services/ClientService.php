@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Rules\CreateClientValidation;
 use App\Rules\UpdateClientValidation;
 
-
+use Illuminate\Support\Facades\DB;
 class ClientService {
 
 
