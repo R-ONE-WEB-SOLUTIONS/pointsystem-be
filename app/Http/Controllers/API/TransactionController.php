@@ -29,8 +29,8 @@ class TransactionController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()]);
         }
-        // $user_id = Auth::id();
-        $user_id = 1;
+        $user_id = Auth::id();
+        // $user_id = 1;
         return $this->transactionService->rewardPoints($request, $user_id);
     }
     
