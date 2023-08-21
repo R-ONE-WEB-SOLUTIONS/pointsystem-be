@@ -69,9 +69,12 @@ class AccountController extends Controller
 
         try {
 
-            $account_number = hex2bin($account);
+          
             
-           
+            $account_number = '';
+            for ($i = 0; $i < strlen($account_number); $i += 2) {
+                $account_number .= chr(hexdec(substr($account_number, $i, 2)));
+            }
 
             $acc = Account::where('account_number', $account_number)->firstOrFail();
             return response()->json([
