@@ -77,10 +77,10 @@ class AccountController extends Controller
                
             ]);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => "Account Not Found: ". $account_number], 404);
+            return response()->json(['error' => "Account Not Found: ". $account], 404);
         }
         catch (\ErrorException $e) {
-            return response()->json(['error' => "Qr Code not valid: ". $account_number], 404);
+            return response()->json(['error' => "Qr Code not valid: ". $account], 404);
         }
 
     }
