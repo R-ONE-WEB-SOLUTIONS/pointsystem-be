@@ -50,8 +50,7 @@ class TransactionService {
             return response()->json([
                 'message' => 'Point successfully recorded.',
                 'points' => $rewardPoint,
-                'account' => $acc,
-                'client' => $acc->client
+                'account' => $acc
             ], 200);
 
         }catch(\Exception $e){
@@ -67,7 +66,7 @@ class TransactionService {
     private function getAccountInfo($account){
 
         try {
-            return Account::where('account_number', $account)->firstOrFail();
+            return Account::with('client')->where('account_number', $account)->firstOrFail();
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => "Account Not Found"], 404);
         }
