@@ -73,7 +73,7 @@ class AccountController extends Controller
             
             $account_number = '';
             for ($i = 0; $i < strlen($account); $i += 2) {
-                $account .= chr(hexdec(substr($account, $i, 2)));
+                $account_number .= chr(hexdec(substr($account, $i, 2)));
             }
 
             $acc = Account::where('account_number', $account_number)->firstOrFail();
