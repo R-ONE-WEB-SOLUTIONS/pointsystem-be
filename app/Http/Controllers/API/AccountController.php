@@ -69,14 +69,7 @@ class AccountController extends Controller
 
         try {
 
-          
-            
-            $account_number = '';
-            for ($i = 0; $i < strlen($account); $i += 2) {
-                $account_number .= chr(hexdec(substr($account, $i, 2)));
-            }
-
-            $acc = Account::where('account_number', $account_number)->firstOrFail();
+            $acc = Account::where('account_number', $account)->firstOrFail();
             return response()->json([
                 'message' => 'Account found',
                 'account_number' => $acc->account_number,
