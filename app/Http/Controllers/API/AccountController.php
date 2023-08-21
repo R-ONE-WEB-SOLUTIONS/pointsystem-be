@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Account;
-use App\Services\AccountService;
 use Illuminate\Http\Request;
+use App\Services\AccountService;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AccountController extends Controller
 {
@@ -36,6 +37,22 @@ class AccountController extends Controller
         //
     }
 
+    public function scanAccount(Request $request)
+    {
+
+        $validatedData = $request->validate([
+            'account_number' => 'required',
+        ]);
+
+        
+
+        return $acc = $this->getAccountInfo($validatedData['account_number']);
+        
+
+
+        
+    }
+
     
     public function update(Request $request, $id)
     {
@@ -46,5 +63,21 @@ class AccountController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function getAccountInfo($account){
+
+        try {
+            $acc = Account::where('account_number', $account)->firstOrFail();
+            return response()->json([
+                'message' => 'Account found',
+                'account_number' => $acc->account_number,
+                'name' => $acc->client->first_name .' '. ($acc->client->middle_name ? $acc->clients->middle_name. ' ' : null). $acc->client->last_name . ' '. ($acc->client->extension_name ? $acc->clients->extension_name: null)
+               
+            ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => "Account Not Found"], 404);
+        }
+
     }
 }
