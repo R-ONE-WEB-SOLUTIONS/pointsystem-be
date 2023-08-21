@@ -50,8 +50,7 @@ class TransactionService {
             return response()->json([
                 'message' => 'Point successfully recorded.',
                 'points' => $rewardPoint,
-                'account' => $acc,
-                'client' => $acc->client
+                'account' => $acc
             ], 200);
 
         }catch(\Exception $e){
