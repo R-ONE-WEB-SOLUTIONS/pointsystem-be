@@ -69,8 +69,8 @@ class AccountController extends Controller
 
         try {
 
-            $originalDataBinary = hex2bin($account);
-            $account_number = utf8_decode($originalDataBinary);
+            $account_number = hex2bin($account);
+            
            
 
             $acc = Account::where('account_number', $account_number)->firstOrFail();
@@ -81,7 +81,7 @@ class AccountController extends Controller
                
             ]);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => "Account Not Found"+ $account_number], 404);
+            return response()->json(['error' => "Account Not Found:", $account_number], 404);
         }
         catch (\ErrorException $e) {
             return response()->json(['error' => "Qr Code not valid"], 404);
