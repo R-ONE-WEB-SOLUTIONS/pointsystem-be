@@ -73,7 +73,7 @@ class AccountController extends Controller
             return response()->json([
                 'message' => 'Account found',
                 'account_number' => $acc->account_number,
-                'name' => $acc->client->first_name .' '. ($acc->client->middle_name ? $acc->clients->middle_name. ' ' : null). $acc->client->last_name . ' '. ($acc->client->extension_name ? $acc->clients->extension_name: null)
+                'name' => $acc->client->first_name .' '. ($acc->client->middle_name !== null ? $acc->client->middle_name.' ' : ''). $acc->client->last_name . ' '. ($acc->client->extension_name ? $acc->clients->extension_name: null)
                
             ]);
         } catch (ModelNotFoundException $e) {
