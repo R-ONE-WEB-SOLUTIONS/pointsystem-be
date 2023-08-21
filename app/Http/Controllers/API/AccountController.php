@@ -68,7 +68,13 @@ class AccountController extends Controller
     private function getAccountInfo($account){
 
         try {
-            $acc = Account::where('account_number', $account)->firstOrFail();
+
+            $originalDataBinary = hex2bin($account);
+            $account_number = utf8_decode($originalDataBinary);
+            $prefix = 'loy@ltyp0ints2k23-';
+            $extractedAccountNumber = substr($account_number, strpos($account_number, $prefix) + strlen($prefix));
+
+            $acc = Account::where('account_number', $extractedAccountNumber)->firstOrFail();
             return response()->json([
                 'message' => 'Account found',
                 'account_number' => $acc->account_number,
