@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Carbon\Carbon;
+use App\Models\Account;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,6 +24,7 @@ class TransactionController extends Controller
         $validator = Validator::make($request->all(), [
             'reciept_number' => 'required|unique:transactions',
             'reciept_amount' => 'required|numeric',
+            'business_id' => 'required',
             'account' => 'required'
         ]);
 
@@ -30,8 +32,27 @@ class TransactionController extends Controller
             return response()->json(['error' => $validator->errors()]);
         }
         $user_id = Auth::id();
-        // $user_id = 1;
         return $this->transactionService->rewardPoints($request, $user_id);
+    }
+
+    public function checkBalance (Request $request) {
+        $validatedData = $request->validate([
+            'account_number' => 'required',
+        ]);
+
+        
+        try {
+            $acc = Account::where('account_number', $validatedData['account_number'])->firstOrFail();
+            return response()->json([
+                'message' => 'Account found',
+                'balance' => $acc->current_balance,
+                'name' => $acc->client->first_name .' '. ($acc->client->middle_name !== null ? $acc->client->middle_name.' ' : ''). $acc->client->last_name . ' '. ($acc->client->extension_name ? $acc->clients->extension_name: null)
+               
+            ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => "Account Not Found"], 404);
+        }
+
     }
     
     public function index()

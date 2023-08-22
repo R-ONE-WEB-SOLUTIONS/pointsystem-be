@@ -20,10 +20,11 @@ class TransactionService {
         
         $acc = $this->getAccountInfo($request->account);
         
-        $pointMultiplier = $this->getPointMultiplier();
+        $pointMultiplier = $this->getPointMultiplier($request->business_id);
+        
         $multiplier = $pointMultiplier->multiplier;
         $reciept_amount = (int)$request->reciept_amount;
-        $rewardPoint = ($reciept_amount * $multiplier);
+        $rewardPoint = ($reciept_amount * $multiplier); 
         $newPoints = $acc->current_balance + $rewardPoint;
         
 
@@ -49,9 +50,14 @@ class TransactionService {
 
             return response()->json([
                 'message' => 'Point successfully recorded.',
-                'points' => $rewardPoint,
-                'account' => $acc,
-                'transaction' => $newTransaction
+                'name' => $acc->client->first_name .' '. ($acc->client->middle_name == null ? $acc->client->middle_name.' ' : null). $acc->client->last_name . ' '. ($acc->client->extension_name ? $acc->clients->extension_name: null),
+                'account_number' => $acc->account_number,
+                'transaction_reference_id' => $newTransaction->reference_id,
+                'transaction_points' => $newTransaction->points,
+                'transaction_type' => $newTransaction->transaction_type,
+                'reciept_amount' => $reciept_amount,
+                'previous_balance' => $newTransaction->previous_balance,
+                'new_balance' => $acc->current_balance,
             ], 200);
 
         }catch(\Exception $e){
@@ -74,10 +80,10 @@ class TransactionService {
 
     }
 
-    private function getPointMultiplier(){
+    private function getPointMultiplier($business_id){
 
         try {
-            return PointCalculation::first();
+            return PointCalculation::where('business_id', '=', $business_id)->first();
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => $e], 404);
         }

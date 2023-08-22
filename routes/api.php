@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     //Transactions
     Route::apiResource('transactions', TransactionController::class);
     Route::post('/rewardPoints', [TransactionController::class, 'rewardPoints']);
+    Route::post('/checkBalance', [TransactionController::class, 'checkBalance']);
     Route::post('/viewAllTransactions', [TransactionController::class, 'viewAllTransactions']);
 
     //Point Calculation

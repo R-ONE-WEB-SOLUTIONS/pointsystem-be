@@ -44,7 +44,6 @@ class AccountController extends Controller
             'account_number' => 'required',
         ]);
 
-        
 
         return $acc = $this->getAccountInfo($validatedData['account_number']);
         
@@ -66,15 +65,14 @@ class AccountController extends Controller
     }
 
     private function getAccountInfo($account){
-
         try {
-
             $acc = Account::where('account_number', $account)->firstOrFail();
             return response()->json([
                 'message' => 'Account found',
                 'account_number' => $acc->account_number,
+                'business_id' => $acc->client->business_id,
+                'business_name' => $acc->client->business->business_name,
                 'name' => $acc->client->first_name .' '. ($acc->client->middle_name !== null ? $acc->client->middle_name.' ' : ''). $acc->client->last_name . ' '. ($acc->client->extension_name ? $acc->clients->extension_name: null)
-               
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => "Account Not Found: ". $account], 404);
