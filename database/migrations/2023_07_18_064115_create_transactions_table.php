@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->string('reference_id')->unique;
-            $table->string('reciept_number')->unique;
+            $table->string('reciept_number')->unique->nullable();
             $table->float('reciept_amount');
             $table->float('points');
             $table->unsignedBigInteger('user_id');

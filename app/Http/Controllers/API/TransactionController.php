@@ -54,6 +54,64 @@ class TransactionController extends Controller
         }
 
     }
+
+    public function claimPoints (Request $request) {
+        $validatedData = $request->validate([
+            'account_number' => 'required',
+            'points_to_claim' => 'required'
+        ]);
+
+        try {
+            $acc = Account::where('account_number', $validatedData['account_number'])->firstOrFail();
+            $convertion = $validatedData['points_to_claim'];
+
+            DB::beginTransaction();
+
+        
+            try {
+                $newTransaction = Transaction::create([
+                    'reference_id' => $acc->id . '_' . time(),
+                    'reciept_number' => $request->reciept_number,
+                    'reciept_amount' => $request->reciept_amount,
+                    'points' => $rewardPoint,
+                    'user_id' => $user_id,
+                    'account_id' => $acc->id,
+                    'transaction_type' => 'Reward Points',
+                    'previous_balance' => $acc->current_balance,
+                    'void' => 0
+                ]);
+
+                $acc ->update(['current_balance' => $newPoints]);
+
+                DB::commit();
+
+                return response()->json([
+                    'message' => 'Point successfully recorded.',
+                    'name' => $acc->client->first_name .' '. ($acc->client->middle_name == null ? $acc->client->middle_name.' ' : null). $acc->client->last_name . ' '. ($acc->client->extension_name ? $acc->clients->extension_name: null),
+                    'account_number' => $acc->account_number,
+                    'transaction_reference_id' => $newTransaction->reference_id,
+                    'transaction_points' => $newTransaction->points,
+                    'transaction_type' => $newTransaction->transaction_type,
+                    'reciept_amount' => $reciept_amount,
+                    'previous_balance' => $newTransaction->previous_balance,
+                    'new_balance' => $acc->current_balance,
+                ], 200);
+
+            }catch(\Exception $e){
+                DB::rollback();
+                return $e;
+                return response()->json(['error' => $e], 400);
+            }
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => "Account Not Found"], 404);
+        }
+
+
+
+
+
+
+    }
     
     public function index()
     {
