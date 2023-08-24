@@ -49,7 +49,7 @@ class TransactionController extends Controller
             return response()->json([
                 'message' => 'Account found',
                 'balance' => $acc->current_balance,
-                'name' => $acc->client->first_name .' '. ($acc->client->middle_name !== null ? $acc->client->middle_name.' ' : ''). $acc->client->last_name . ' '. ($acc->client->extension_name ? $acc->clients->extension_name: null)
+                'name' => $acc->client->first_name .' '. ($acc->client->middle_name !== null ? $acc->client->middle_name.' ' : null). $acc->client->last_name . ' '. ($acc->client->extension_name ? $acc->clients->extension_name: null)
                
             ]);
         } catch (ModelNotFoundException $e) {
