@@ -58,6 +58,7 @@ class TransactionService {
                 'reciept_amount' => $reciept_amount,
                 'previous_balance' => $newTransaction->previous_balance,
                 'new_balance' => $acc->current_balance,
+                'date_created' => $newTransaction->created_at
             ], 200);
 
         }catch(\Exception $e){
