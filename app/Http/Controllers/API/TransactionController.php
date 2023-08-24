@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Exception;
 use Carbon\Carbon;
 use App\Models\Account;
 use App\Models\Transaction;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Services\TransactionService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class TransactionController extends Controller
 {
@@ -99,7 +101,7 @@ class TransactionController extends Controller
 
                 return response()->json([
                     'message' => 'Point successfully recorded.',
-                    'name' => $acc->client->first_name .' '. ($acc->client->middle_name == null ? $acc->client->middle_name.' ' : null). $acc->client->last_name . ' '. ($acc->client->extension_name ? $acc->clients->extension_name: null),
+                    'name' => $acc->client->first_name .' '. ($acc->client->middle_name !== null ? $acc->client->middle_name.' ' : null). $acc->client->last_name . ' '. ($acc->client->extension_name ? $acc->clients->extension_name: null),
                     'account_number' => $acc->account_number,
                     'transaction_reference_id' => $newTransaction->reference_id,
                     'transaction_points' => $newTransaction->points,
@@ -109,7 +111,7 @@ class TransactionController extends Controller
                     'new_balance' => $acc->current_balance,
                 ], 200);
 
-            }catch(\Exception $e){
+            }catch(Exception $e){
                 DB::rollback();
                 return $e;
                 return response()->json(['error' => $e], 400);

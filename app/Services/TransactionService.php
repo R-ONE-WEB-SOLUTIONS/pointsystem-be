@@ -50,7 +50,7 @@ class TransactionService {
 
             return response()->json([
                 'message' => 'Point successfully recorded.',
-                'name' => $acc->client->first_name .' '. ($acc->client->middle_name == null ? $acc->client->middle_name.' ' : null). $acc->client->last_name . ' '. ($acc->client->extension_name ? $acc->clients->extension_name: null),
+                'name' => $acc->client->first_name .' '. ($acc->client->middle_name !== null ? $acc->client->middle_name.' ' : null). $acc->client->last_name . ' '. ($acc->client->extension_name ? $acc->clients->extension_name: null),
                 'account_number' => $acc->account_number,
                 'transaction_reference_id' => $newTransaction->reference_id,
                 'transaction_points' => $newTransaction->points,
