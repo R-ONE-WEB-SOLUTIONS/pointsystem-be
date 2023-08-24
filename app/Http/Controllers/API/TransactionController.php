@@ -69,7 +69,7 @@ class TransactionController extends Controller
             
             $request->reciept_number == null ? $reciept_number = $acc->id . '_' . time() : $reciept_number = $request->reciept_number;
             $request->reciept_amount == null ? $reciept_amount = 0.00 : $reciept_amount = $request->reciept_amount;
-            $rewardPoint = '0.00';
+            $rewardPoint = $validatedData['points_to_claim'];
             
             if($acc->current_balance < $validatedData['points_to_claim']) {
                 return response()->json([
