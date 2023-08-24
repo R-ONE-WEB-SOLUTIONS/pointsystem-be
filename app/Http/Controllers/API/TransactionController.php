@@ -127,15 +127,6 @@ class TransactionController extends Controller
 
     }
     
-    public function index()
-    {
-        $transanctions = Transaction::all();
-        return response()->json([
-            'message' => 'transactions found',
-            'transanctions' => $transanctions
-        ],200);
-    }
-
     public function viewAllTransactions(Request $request)
     {
         if($request->business_id != null){
@@ -170,13 +161,6 @@ class TransactionController extends Controller
         }
         
     }
-
-    
-    public function store(Request $request)
-    {
-        //
-    }
-
     
     public function show($id)
     {
@@ -192,12 +176,14 @@ class TransactionController extends Controller
 
     }
 
-    
     public function update(Request $request, $id)
     {
         //
     }
 
+    public function voidTransaction($id){
+
+    }
     
     public function destroy($id)
     {
