@@ -166,7 +166,7 @@ class TransactionController extends Controller
     
     public function show($id)
     {
-        $transactions = Transaction::where('account_id', '=', $id)->get();
+        $transactions = Transaction::where('account_id', '=', $id)->orderBy('transactions.created_at', 'desc')->get();
 
         if($transactions->isEmpty()){
             return response()->json(['message' => 'No transactions found'], 200);
