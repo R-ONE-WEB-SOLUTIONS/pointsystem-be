@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\Account;
 use Illuminate\Http\Request;
+use App\Models\PointCalculation;
 use App\Services\AccountService;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -45,6 +46,8 @@ class AccountController extends Controller
         ]);
 
 
+
+
         return $acc = $this->getAccountInfo($validatedData['account_number']);
         
 
@@ -67,6 +70,12 @@ class AccountController extends Controller
     private function getAccountInfo($account){
         try {
             $acc = Account::where('account_number', $account)->firstOrFail();
+            
+            try {
+                $pointCalc = PointCalculation::where('business_id', '=', $acc->client->business_id)->first();
+            } catch (ModelNotFoundException $e) {
+                return response()->json(['error' => $e], 404);
+            }
             return response()->json([
                 'message' => 'Account found',
                 'account_number' => $acc->account_number,
@@ -74,7 +83,8 @@ class AccountController extends Controller
                 'business_name' => $acc->client->business->business_name,
                 'card_type' => $acc->client->clientType->client_type,
                 'name' => $acc->client->first_name .' '. ($acc->client->middle_name !== null ? $acc->client->middle_name.' ' : ''). $acc->client->last_name . ' '. ($acc->client->extension_name ? $acc->clients->extension_name: null),
-                'current_balance' => $acc->current_balance
+                'current_balance' => $acc->current_balance,
+                'point_multiplier' => $pointCalc->multiplier
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => "Account Not Found: ". $account], 404);

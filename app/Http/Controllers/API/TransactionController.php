@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Account;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Services\TransactionService;
 use Illuminate\Support\Facades\Auth;
@@ -60,23 +61,34 @@ class TransactionController extends Controller
             'account_number' => 'required',
             'points_to_claim' => 'required'
         ]);
-
+        
         try {
             $acc = Account::where('account_number', $validatedData['account_number'])->firstOrFail();
-            $convertion = $validatedData['points_to_claim'];
-
+            
+            $request->reciept_number == null ? $reciept_number = $acc->id . '_' . time() : $reciept_number = $request->reciept_number;
+            $request->reciept_amount == null ? $reciept_amount = 0.00 : $reciept_amount = $request->reciept_amount;
+            $rewardPoint = '0.00';
+            
+            if($acc->current_balance < $validatedData['points_to_claim']) {
+                return response()->json([
+                    'error' => 'Not enough points.',
+                    'current_balance' => $acc->current_balance
+                ]);
+            }
+            $newPoints = ($acc->current_balance - $validatedData['points_to_claim']);
+            
             DB::beginTransaction();
 
         
             try {
                 $newTransaction = Transaction::create([
                     'reference_id' => $acc->id . '_' . time(),
-                    'reciept_number' => $request->reciept_number,
-                    'reciept_amount' => $request->reciept_amount,
+                    'reciept_number' => $reciept_number,
+                    'reciept_amount' => $reciept_amount,
                     'points' => $rewardPoint,
-                    'user_id' => $user_id,
+                    'user_id' => Auth::id(),
                     'account_id' => $acc->id,
-                    'transaction_type' => 'Reward Points',
+                    'transaction_type' => 'Claim Points',
                     'previous_balance' => $acc->current_balance,
                     'void' => 0
                 ]);
