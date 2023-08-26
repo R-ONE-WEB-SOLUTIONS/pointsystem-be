@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Account;
+use App\Models\VoidReason;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -35,6 +36,11 @@ class Transaction extends Model
     public function account()
     {
         return $this->belongsTo(Account::class, 'account_id');
+    }
+
+    public function voidReason()
+    {
+        return $this->hasMany(VoidReason::class);
     }
 
 

@@ -218,47 +218,47 @@ class DatabaseSeeder extends Seeder
 
         PointCalculation::insert($point_calculation);
 
-        $transaction = [
-            [
-                'reference_id' => 1 . '_' . time(),
-                'reciept_number' => '123123123123',
-                'reciept_amount' => 2000.00,
-                'points' => 20.00,
-                'user_id' => 2,
-                'account_id' => 1,
-                'transaction_type' => 'Reward Points',
-                'previous_balance' => 0.00,
-                'void' => false,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ],
-            [
-                'reference_id' => 2 . '_' . time(),
-                'reciept_number' => '123123123123',
-                'reciept_amount' => 1000.00,
-                'points' => 10.00,
-                'user_id' => 2,
-                'account_id' => 1,
-                'transaction_type' => 'Reward Points',
-                'previous_balance' => 20.00,
-                'void' => false,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ],
-            [
-                'reference_id' => 3 . '_' . time(),
-                'reciept_number' => '123123123124',
-                'reciept_amount' => 1000.00,
-                'points' => 10.00,
-                'user_id' => 2,
-                'account_id' => 2,
-                'transaction_type' => 'Reward Points',
-                'previous_balance' => 0.00,
-                'void' => false,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ]
-        ];
-        Transaction::insert($transaction);
+        // $transaction = [
+        //     [
+        //         'reference_id' => 1 . '_' . time(),
+        //         'reciept_number' => '123123123123',
+        //         'reciept_amount' => 2000.00,
+        //         'points' => 20.00,
+        //         'user_id' => 2,
+        //         'account_id' => 1,
+        //         'transaction_type' => 'Reward Points',
+        //         'previous_balance' => 0.00,
+        //         'void' => false,
+        //         'created_at' => Carbon::now(),
+        //         'updated_at' => Carbon::now()
+        //     ],
+        //     [
+        //         'reference_id' => 2 . '_' . time(),
+        //         'reciept_number' => '123123123124',
+        //         'reciept_amount' => 1000.00,
+        //         'points' => 10.00,
+        //         'user_id' => 2,
+        //         'account_id' => 1,
+        //         'transaction_type' => 'Reward Points',
+        //         'previous_balance' => 20.00,
+        //         'void' => false,
+        //         'created_at' => Carbon::now(),
+        //         'updated_at' => Carbon::now()
+        //     ],
+        //     [
+        //         'reference_id' => 3 . '_' . time(),
+        //         'reciept_number' => '123123123124',
+        //         'reciept_amount' => 1000.00,
+        //         'points' => 10.00,
+        //         'user_id' => 2,
+        //         'account_id' => 2,
+        //         'transaction_type' => 'Reward Points',
+        //         'previous_balance' => 0.00,
+        //         'void' => false,
+        //         'created_at' => Carbon::now(),
+        //         'updated_at' => Carbon::now()
+        //     ]
+        // ];
+        // Transaction::insert($transaction);
     }
 }
