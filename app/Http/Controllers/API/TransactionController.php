@@ -139,7 +139,6 @@ class TransactionController extends Controller
                             ->join('client_types', 'client_types.id', '=', 'clients.client_type_id')
                             ->join('businesses', 'clients.business_id', '=', 'businesses.id')
                             ->join('void_reasons', 'void_reasons.transaction_id', '=', 'transactions.id')
-                            ->where('businesses.id', $request->business_id)
                             ->orderBy('transactions.created_at', 'desc')
                             ->get();
             
