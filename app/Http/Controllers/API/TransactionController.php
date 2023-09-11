@@ -185,6 +185,81 @@ class TransactionController extends Controller
         //
     }
 
+    // public function voidTransaction(Request $request, $id){
+        
+    //     $validatedData = $request->validate([
+    //         'reason_for_voiding' => 'required'
+    //     ]);
+        
+    //     try {
+    //         $transaction = Transaction::findOrFail($id);
+    //         if($transaction->void){
+    //             return response()->json(['message' => 'This transaction is already voided'], JsonResponse::HTTP_NOT_FOUND);
+    //         }
+    //         try {
+    //             $account = Account::findOrFail($transaction->account_id);
+    //         } catch (ModelNotFoundException $exception) {
+    //             return response()->json(['error' => 'Something went wrong try again'], JsonResponse::HTTP_NOT_FOUND);
+    //         }
+    //         $transactions_type = $transaction->transaction_type;
+    //         $transaction_points = $transaction->points;
+    //         $account_current_balance = $account->current_balance;
+
+    //         if($transactions_type == 'Reward Points'){
+
+    //             $new_current_balance = $account_current_balance - $transaction_points;
+    //             $new_previous_balance = $account_current_balance;
+
+    //         }else if($transactions_type == 'Claim Points'){
+
+    //             $new_current_balance = $account_current_balance + $transaction_points;
+    //             $new_previous_balance = $account_current_balance;
+    //         }
+
+    //         try {
+    //             $transaction ->update([
+    //                 'previous_balance' => $new_previous_balance,
+    //                 'void' => 1
+    //             ]);
+
+    //             $account ->update(['current_balance' => $new_current_balance]);
+    //             $user = Auth::user();
+    //             $fullName = $user->first_name . ($user->middle_name ? ' ' . $user->middle_name : '') . ' ' . $user->last_name . ($user->extension_name ? ' ' . $user->extension_name : '');
+    //             $reason_for_voiding = VoidReason::create([
+    //                 'reason_for_voiding' => $request->reason_for_voiding,
+    //                 'transaction_id' => $transaction->id,
+    //                 'voiding_user' => $fullName
+    //             ]);
+
+    //             DB::commit();
+
+    //             return response()->json([
+    //                 'message' => 'Transaction succesfully voided',
+    //                 'name' => $account->client->first_name .' '. ($account->client->middle_name !== null ? $account->client->middle_name.' ' : null). $account->client->last_name . ' '. ($account->client->extension_name ? $account->clients->extension_name: null),
+    //                 'account_number' => $account->account_number,
+    //                 'transaction_reference_id' => $transaction->reference_id,
+    //                 'transaction_points' => $transaction->points,
+    //                 'transaction_type' => $transaction->transaction_type,
+    //                 'reciept_amount' => $transaction->reciept_amount,
+    //                 'previous_balance' => $transaction->previous_balance,
+    //                 'new_balance' => $account->current_balance,
+    //                 'reason' => $reason_for_voiding->reason_for_voiding
+    //             ], 200);
+
+    //         }catch(Exception $e){
+    //             DB::rollback();
+    //             return response()->json(['error' => $e], 400);
+    //         }
+            
+           
+
+
+    //         return $transaction;
+    //     } catch (ModelNotFoundException $exception) {
+    //         return response()->json(['error' => 'Transaction not found'], JsonResponse::HTTP_NOT_FOUND);
+    //     }
+    // }
+
     public function voidTransaction(Request $request, $id){
         
         $validatedData = $request->validate([
@@ -196,15 +271,17 @@ class TransactionController extends Controller
             if($transaction->void){
                 return response()->json(['message' => 'This transaction is already voided'], JsonResponse::HTTP_NOT_FOUND);
             }
+            
             try {
                 $account = Account::findOrFail($transaction->account_id);
             } catch (ModelNotFoundException $exception) {
                 return response()->json(['error' => 'Something went wrong try again'], JsonResponse::HTTP_NOT_FOUND);
             }
+            
             $transactions_type = $transaction->transaction_type;
             $transaction_points = $transaction->points;
             $account_current_balance = $account->current_balance;
-
+            
             if($transactions_type == 'Reward Points'){
 
                 $new_current_balance = $account_current_balance - $transaction_points;
@@ -216,11 +293,28 @@ class TransactionController extends Controller
                 $new_previous_balance = $account_current_balance;
             }
 
+            // return $new_current_balance;
+            
             try {
-                $transaction ->update([
+
+                $newTransaction = Transaction::create([
+                    'reference_id' => $account->id . '_' . time(),
+                    'reciept_number' => 'voided-'.$transaction->reciept_number,
+                    'reciept_amount' => $transaction->reciept_amount,
+                    'points' => $new_current_balance,
+                    'user_id' => Auth::id(),
+                    'account_id' => $account->id,
+                    'transaction_type' => 'Void Transaction',
                     'previous_balance' => $new_previous_balance,
                     'void' => 1
                 ]);
+               
+
+                $transaction->update([
+                    'void' => 1
+                ]);
+
+                
 
                 $account ->update(['current_balance' => $new_current_balance]);
                 $user = Auth::user();
@@ -230,9 +324,9 @@ class TransactionController extends Controller
                     'transaction_id' => $transaction->id,
                     'voiding_user' => $fullName
                 ]);
-
+                
                 DB::commit();
-
+                
                 return response()->json([
                     'message' => 'Transaction succesfully voided',
                     'name' => $account->client->first_name .' '. ($account->client->middle_name !== null ? $account->client->middle_name.' ' : null). $account->client->last_name . ' '. ($account->client->extension_name ? $account->clients->extension_name: null),

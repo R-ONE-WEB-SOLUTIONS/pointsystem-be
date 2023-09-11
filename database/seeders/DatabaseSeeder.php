@@ -181,14 +181,14 @@ class DatabaseSeeder extends Seeder
             [    
                 'account_number' => date("Ymd",time()) .'_'. 100000001,
                 'client_id' => 100000001,
-                'current_balance' => 30.00,
+                'current_balance' => 0.00,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [    
                 'account_number' => date("Ymd",time()) .'_'. 100000002,
                 'client_id' => 100000002,
-                'current_balance' => 20.00,
+                'current_balance' => 0.00,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
