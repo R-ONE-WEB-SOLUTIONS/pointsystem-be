@@ -19,6 +19,7 @@ use App\Http\Controllers\API\PointCalculationController;
 // });
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/getGraphDetails', [UserController::class, 'graphDetails']);
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
 
@@ -72,3 +73,5 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::apiResource('pointCalculation', PointCalculationController::class);
     Route::post('/viewPointCalculationByBusiness', [PointCalculationController::class, 'viewPointCalculationByBusiness']);
 });
+
+
