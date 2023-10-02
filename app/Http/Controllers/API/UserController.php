@@ -53,4 +53,8 @@ class UserController extends Controller
     {
         return $this->userService->deleteUser($id);
     }
+
+    public function graphDetails(Request $request) {
+        return $this->userService->getGraphDetails($request);
+    }
 }
