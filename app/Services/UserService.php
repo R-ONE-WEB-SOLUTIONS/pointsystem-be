@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Exception;
 use App\Models\User;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
@@ -150,6 +151,53 @@ class UserService {
         return response()->json([
             'message' => 'User deleted successfully.'
         ],200);
+    }
+
+
+    public function getGraphDetails($request) {
+        if($request->business_id != null){
+            $clients = Client::where('business_id', '=', $request->business_id)
+            ->leftJoin('client_types', 'clients.client_type_id', '=', 'client_types.id')
+            ->leftJoin('businesses', 'clients.business_id', '=', 'businesses.id')
+            ->join('accounts', 'clients.id', '=', 'accounts.client_id')
+            ->select('accounts.account_number','clients.*', 'client_types.client_type', 'businesses.business_name')
+            ->get();
+
+            $users = User::where('business_id', '=', $request->business_id)
+            ->leftJoin('user_types', 'users.user_type_id', '=', 'user_types.id')
+            ->leftJoin('businesses', 'users.business_id', '=', 'businesses.id')
+            ->select('users.*', 'user_types.user_type', 'businesses.business_name')
+            ->get();
+            
+            $data = [
+                'clients' => $clients,
+                'users' => $users
+            ];
+
+            // $clients['account_number'] = Hash::make($clients['account_number']);
+            return response()->json($data, 200);
+        }else{
+            $clients = Client::leftJoin('client_types', 'clients.client_type_id', '=', 'client_types.id')
+            ->leftJoin('businesses', 'clients.business_id', '=', 'businesses.id')
+            ->join('accounts', 'clients.id', '=', 'accounts.client_id')
+            ->select('accounts.account_number','clients.*', 'client_types.client_type', 'businesses.business_name')
+            ->get();
+
+            $users = User::leftJoin('user_types', 'users.user_type_id', '=', 'user_types.id')
+            ->leftJoin('businesses', 'users.business_id', '=', 'businesses.id')
+            ->select('users.*', 'user_types.user_type', 'businesses.business_name')
+            ->get();
+
+            $data = [
+                'clients' => $clients,
+                'users' => $users
+            ];
+          
+            // $clients['account_number']  = Hash::make($clients['account_number']);
+            return response()->json($data, 200);
+        }
+        
+      
     }
 
 
