@@ -296,7 +296,7 @@ class TransactionController extends Controller
             // return $new_current_balance;
 
             try {
-                $transactionVoid = "Void (".(explode(" ", $inputString))[0].")"
+                $transactionVoid = "Void (".(explode(" ", $inputString))[0].")";
                 $newTransaction = Transaction::create([
                     'reference_id' => $account->id . time(),
                     'reciept_number' => 'V'.$transaction->reciept_number,
