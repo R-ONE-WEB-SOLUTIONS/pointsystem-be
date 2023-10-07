@@ -340,7 +340,7 @@ class TransactionController extends Controller
                     'reason' => $reason_for_voiding->reason_for_voiding
                 ], 200);
 
-            }catch(Exception $e){
+            }catch(\Exception $e){
                 DB::rollback();
                 return response()->json(['error' => $e], 400);
             }
