@@ -19,9 +19,9 @@ use App\Http\Controllers\API\PointCalculationController;
 // });
 
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/getGraphDetails', [UserController::class, 'graphDetails']);
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
+    Route::post('/getGraphDetails', [UserController::class, 'graphDetails']);
 
     //Auth
     Route::apiResource('auth', AuthController::class);
@@ -32,12 +32,12 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     // User Type
     Route::apiResource('userType', UserTypeController::class);
-    
+
 
     //User
     Route::apiResource('users', UserController::class);
     Route::get('/searchUsers', [UserController::class, 'searchUsers']);
-    
+
     Route::post('/viewAllUsers',[UserController::class, 'viewAllUsers']);
 
     //Pre Reg
@@ -60,13 +60,13 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('/scanAccount',[AccountController::class, 'scanAccount']);
 
     //
-    
+
     //Transactions
     Route::apiResource('transactions', TransactionController::class);
     Route::post('/rewardPoints', [TransactionController::class, 'rewardPoints']);
     Route::post('/checkBalance', [TransactionController::class, 'checkBalance']);
     Route::post('/claimPoints', [TransactionController::class, 'claimPoints']);
-    Route::post('/voidTransaction/{transaction}', [TransactionController::class, 'voidTransaction']);
+    Route::put('/voidTransaction/{transaction}', [TransactionController::class, 'voidTransaction']);
     Route::post('/viewAllTransactions', [TransactionController::class, 'viewAllTransactions']);
 
     //Point Calculation
