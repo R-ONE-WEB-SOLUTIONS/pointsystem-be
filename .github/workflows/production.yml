@@ -67,4 +67,4 @@ jobs:
           echo '${{ secrets.SSH_PROD }}' | sshpass -p '${{ secrets.SSH_PROD }}' ssh -t dltprime@31.220.55.56 "sudo -S mkdir -p /var/www/html/dltprime_prod_be"
     - name: Deploy to Hostinger
       run: |
-          sshpass -p '${{ secrets.SSH_PASS }}' rsync -avz -e "ssh -p 22" ./ root@31.220.55.56:/var/www/html/dltprime_prod_be
+          sshpass -p '${{ secrets.SSH_PROD }}' rsync -avz -e "ssh -p 22" ./ root@31.220.55.56:/var/www/html/dltprime_prod_be
