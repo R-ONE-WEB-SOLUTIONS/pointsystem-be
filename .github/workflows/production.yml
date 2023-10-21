@@ -25,11 +25,6 @@ jobs:
     - name: Create .env file from .env.production
       run: cp .env.production .env
 
-    - name: Install Composer
-      run: |
-        curl -sS https://getcomposer.org/installer | php -- --filename=composer --mirror=github
-        php composer.phar install
-        sudo mv composer.phar /usr/local/bin/composer
 
     - name: Update Composer Lock File
       run: composer update --no-scripts --no-progress
