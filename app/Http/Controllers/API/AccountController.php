@@ -23,14 +23,14 @@ class AccountController extends Controller
         ]);
     }
 
-    
+
     public function store(Request $request)
     {
         //
     }
 
     public function viewAllAccounts(Request $request)
-    {   
+    {
         return $this->accountService->viewAllAccounts($request);
     }
     public function show($id)
@@ -49,19 +49,19 @@ class AccountController extends Controller
 
 
         return $acc = $this->getAccountInfo($validatedData['account_number']);
-        
 
 
-        
+
+
     }
 
-    
+
     public function update(Request $request, $id)
     {
         //
     }
 
-    
+
     public function destroy($id)
     {
         //
@@ -70,7 +70,7 @@ class AccountController extends Controller
     private function getAccountInfo($account){
         try {
             $acc = Account::where('account_number', $account)->firstOrFail();
-            
+
             try {
                 $pointCalc = PointCalculation::where('business_id', '=', $acc->client->business_id)->first();
             } catch (ModelNotFoundException $e) {
