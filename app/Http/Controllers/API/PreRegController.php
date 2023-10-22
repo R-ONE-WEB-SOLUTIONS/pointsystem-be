@@ -14,7 +14,7 @@ use App\Models\Account;
 
 class PreRegController extends Controller
 {
-    
+
     public function index(){
 
         $pre_reg = PreReg::leftJoin('client_types', 'pre_regs.client_type_id', '=', 'client_types.id')
@@ -31,9 +31,9 @@ class PreRegController extends Controller
     }
 
     public function viewAllPreReg(Request $request){
-        
+
         if($request->business_id != null){
-           
+
             $pre_reg = PreReg::where('business_id', '=', $request->business_id)
                 ->leftJoin('client_types', 'pre_regs.client_type_id', '=', 'client_types.id')
                 ->leftJoin('businesses', 'pre_regs.business_id', '=', 'businesses.id')
@@ -48,7 +48,7 @@ class PreRegController extends Controller
             ]);
 
         }else{
-            
+
             $pre_reg = PreReg::leftJoin('client_types', 'pre_regs.client_type_id', '=', 'client_types.id')
                     ->leftJoin('businesses', 'pre_regs.business_id', '=', 'businesses.id')
                     ->select('pre_regs.*', 'client_types.client_type', 'businesses.business_name')
@@ -62,7 +62,7 @@ class PreRegController extends Controller
         }
     }
 
-    
+
     public function store(Request $request){
 
         $validator = Validator::make($request->all(), [
@@ -82,17 +82,17 @@ class PreRegController extends Controller
             'client_type_id' => 'required',
             'business_id' => 'required',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-    
+
         $preClient = PreReg::create($request->all());
-    
+
         return response()->json(['message' => 'Client has been pre registered', 'preClient' => $preClient], 200);
     }
 
-    
+
     public function show($id){
         //
     }
@@ -127,13 +127,13 @@ class PreRegController extends Controller
             'pre_reg' => $pre_reg
         ]);
     }
-    
+
     public function applicantStatus(Request $request, $id){
         $preClient = PreReg::findOrFail($id);
-        
+
 
         if($request->registered == 'decline' || $request->registered == 'Decline'){
-            
+
             $preClient->update([
                 'registered' => false
             ]);
@@ -142,10 +142,10 @@ class PreRegController extends Controller
 
         }else if($request->registered == 'register' || $request->registered == 'Register'){
             $data = $preClient->toArray();
-            
+
             unset($data['created_at']);
             unset($data['updated_at']);
-            
+
             $data['active'] = 1;
 
             // Check if the email is already in use for the same business type
@@ -157,7 +157,6 @@ class PreRegController extends Controller
                 return response()->json(['error' => 'Email is already in use for the same business type.'], 409);
             }
             $result = DB::transaction(function () use ($data, $preClient){
-
                 $client = Client::create($data);
                 
                 if ($client->client_type_id == 1) {
@@ -167,14 +166,14 @@ class PreRegController extends Controller
                     
                     $client->update(['expirey_date' => now()->addYears(6)]);
                 }
-               
+
                 $preClient->update([
                         'registered' => true
                         ]);
                 $this->createClientAccount($client->id);
 
                 return true;
-               
+
                  });
 
                  if ($result) {
@@ -183,7 +182,7 @@ class PreRegController extends Controller
                     return response()->json(['message' => 'Something went wrong upon saving. Execute Rollback'], 500);
                 }
 
-        
+
 
         }
 
@@ -191,7 +190,7 @@ class PreRegController extends Controller
 
     private function createClientAccount($clientId){
 
-        $accountNumber =  date("Ymd",time()) . '_'. $clientId;
+        $accountNumber =  date("Ymd",time()) . $clientId;
 
         $account = Account::create([
             'client_id' => $clientId,
@@ -201,7 +200,7 @@ class PreRegController extends Controller
     }
     public function destroy($id){
         $pre_reg = PreReg::findOrFail($id);
-    
+
         $pre_reg->delete();
 
         return response()->json([

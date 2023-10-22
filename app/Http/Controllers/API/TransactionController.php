@@ -81,7 +81,7 @@ class TransactionController extends Controller
         try {
             $acc = Account::where('account_number', $validatedData['account_number'])->firstOrFail();
 
-            $request->reciept_number == null ? $reciept_number = $acc->id . '_' . time() : $reciept_number = $request->reciept_number;
+            $request->reciept_number == null ? $reciept_number = $acc->id . time() : $reciept_number = $request->reciept_number;
             $request->reciept_amount == null ? $reciept_amount = $validatedData['points_to_claim'] : $reciept_amount = $request->reciept_amount;
             $rewardPoint = $validatedData['points_to_claim'];
 
@@ -98,7 +98,7 @@ class TransactionController extends Controller
 
             try {
                 $newTransaction = Transaction::create([
-                    'reference_id' => $acc->id . '_' . time(),
+                    'reference_id' => $acc->id . time(),
                     'reciept_number' => $reciept_number,
                     'reciept_amount' => $reciept_amount,
                     'points' => $rewardPoint,
