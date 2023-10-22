@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
             Client::where('created_at', '<', now()->subYear())
                 ->where('active', true)
                 ->update(['active' => false]);
-        })->everyFiveMinutes();
+        });
     }
 
     /**
