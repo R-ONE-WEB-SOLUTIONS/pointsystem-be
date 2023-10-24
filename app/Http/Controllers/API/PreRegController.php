@@ -167,6 +167,7 @@ class PreRegController extends Controller
                     $client->update(['expirey_date' => now()->addYears(6)]);
                 }
 
+
                 $preClient->update([
                         'registered' => true
                         ]);
