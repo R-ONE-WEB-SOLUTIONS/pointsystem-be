@@ -157,8 +157,16 @@ class PreRegController extends Controller
                 return response()->json(['error' => 'Email is already in use for the same business type.'], 409);
             }
             $result = DB::transaction(function () use ($data, $preClient){
-                $client = Client::create($data);
 
+                $client = Client::create($data);
+                
+                if ($client->client_type_id == 1) {
+            
+                    $client->update(['expirey_date' => now()->addYears(3)]);
+                } elseif ($client->client_type_id == 2) {
+                    
+                    $client->update(['expirey_date' => now()->addYears(6)]);
+                }
                
                 $preClient->update([
                         'registered' => true
