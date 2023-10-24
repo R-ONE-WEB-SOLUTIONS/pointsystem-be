@@ -26,6 +26,7 @@ return new class extends Migration
             $table->boolean('active');
             $table->unsignedBigInteger('client_type_id');
             $table->unsignedBigInteger('business_id');
+            $table->date('expirey_date');
             $table->timestamps();
 
         });

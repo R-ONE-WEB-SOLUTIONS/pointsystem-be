@@ -98,6 +98,15 @@ class ClientService {
             'account_number' => $accountNumber,
             'current_balance' => 0,
         ]);
+
+        
+        if ($client->client_type_id == 1) {
+            
+            $client->update(['expirey_date' => now()->addYears(3)]);
+        } elseif ($client->client_type_id == 2) {
+            
+            $client->update(['expirey_date' => now()->addYears(6)]);
+        }
     
         return response()->json(['message' => 'client created successfully', 'client' => $client], 200);
 
