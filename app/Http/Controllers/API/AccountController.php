@@ -76,6 +76,9 @@ class AccountController extends Controller
             } catch (ModelNotFoundException $e) {
                 return response()->json(['error' => $e], 404);
             }
+            if (!$acc->$client->active) {
+                return response()->json(['error' => 'This account is associated with an inactive client. Transactions are not allowed.'], 400);
+            }
             return response()->json([
                 'message' => 'Account found',
                 'account_number' => $acc->account_number,

@@ -38,11 +38,7 @@ class TransactionController extends Controller
         }
         $user_id = Auth::id();
 
-        $client = $request->account->client;
 
-        if ($client && !$client->active) {
-            return response()->json(['error' => 'This account is associated with an inactive client. Transactions are not allowed.'], 400);
-        }
         return $this->transactionService->rewardPoints($request, $user_id);
     }
 
@@ -72,11 +68,7 @@ class TransactionController extends Controller
             'points_to_claim' => 'required'
         ]);
 
-        $client = $request->account->client;
 
-        if ($client && !$client->active) {
-            return response()->json(['error' => 'This account is associated with an inactive client. Transactions are not allowed.'], 400);
-        }
 
         try {
             $acc = Account::where('account_number', $validatedData['account_number'])->firstOrFail();
