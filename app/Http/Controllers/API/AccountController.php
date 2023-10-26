@@ -46,6 +46,21 @@ class AccountController extends Controller
         ]);
 
 
+        // Fetch the account details using the provided account number
+        $account = Account::where('account_number', $validatedData['account_number'])->first();
+
+        // Check if the account exists
+        if (!$account) {
+            return response()->json(['error' => 'Account not found.'], 404);
+        }
+
+        // Retrieve the associated client
+        $client = $account->client;
+
+        // Check if the client is active
+        if ($client && !$client->active) {
+            return response()->json(['error' => 'This account is associated with an inactive client. Transactions are not allowed.'], 400);
+        }
 
 
         return $acc = $this->getAccountInfo($validatedData['account_number']);
