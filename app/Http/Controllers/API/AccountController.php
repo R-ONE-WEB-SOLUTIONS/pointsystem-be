@@ -166,7 +166,7 @@ class AccountController extends Controller
                 'card_type' => $acc->client->clientType->client_type,
                 'name' => $acc->client->first_name .' '. ($acc->client->middle_name !== null ? $acc->client->middle_name.' ' : ''). $acc->client->last_name . ' '. ($acc->client->extension_name ? $acc->clients->extension_name: null),
                 'current_balance' => $acc->current_balance,
-                'point_multiplier' => $pointCalc->multiplier
+                'point_multiplier' => $pointCalc->multiplier,
                 'transactions' =>  $transactions
             ]);
         } catch (ModelNotFoundException $e) {
