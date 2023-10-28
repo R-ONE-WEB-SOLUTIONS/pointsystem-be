@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Account;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\PointCalculation;
 use App\Services\AccountService;
