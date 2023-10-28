@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PrintController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ClientController;
@@ -19,6 +20,8 @@ use App\Http\Controllers\API\PointCalculationController;
 // });
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/print-receipt', [PrintController::class, 'printReceipt']);
+
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('/getGraphDetails', [UserController::class, 'graphDetails']);
