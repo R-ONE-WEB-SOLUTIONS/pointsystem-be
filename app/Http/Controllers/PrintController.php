@@ -9,8 +9,8 @@ use Mike42\Escpos\Printer;
 class PrintController extends Controller
 {
     public function printReceipt(Request $request) {
-        // Get the content data URL from the request
-        $dataUrl = $request->input('content');
+        // Get the content you want to print from the request or generate it
+        $content = $request->input('content');
     
         // Specify the printer name (replace with your actual printer name)
         $printerName = "XP-58";
@@ -19,11 +19,8 @@ class PrintController extends Controller
             $connector = new WindowsPrintConnector($printerName);
             $printer = new Printer($connector);
     
-            // Decode the data URL to get the raw PDF content
-            $pdfContent = base64_decode(preg_replace('#^data:application/\w+;base64,#i', '', $dataUrl));
-    
-            // Send the PDF content to the printer
-            $printer->graphics($pdfContent);
+            // Send the content to the printer
+            $printer->text($content);
     
             // Cut the paper (optional)
             $printer->cut();
@@ -35,7 +32,6 @@ class PrintController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
-    }
-    
+}
 
 }
