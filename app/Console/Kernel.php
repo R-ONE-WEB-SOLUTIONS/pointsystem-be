@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Models\Client;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,7 +16,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            // Update clients whose accounts are one year old
+            Client::where('created_at', '<', now()->subYear())
+                ->where('active', true)
+                ->update(['active' => false]);
+        });
     }
 
     /**

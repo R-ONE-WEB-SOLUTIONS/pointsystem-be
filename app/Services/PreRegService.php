@@ -51,12 +51,12 @@ class PreRegService {
 
             return response()->json($clients, 200);
         }
-        
-      
+
+
     }
 
     public function createClient($request) {
-        
+
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -69,27 +69,27 @@ class PreRegService {
             'business_id' => 'required',
             'active' => 'required',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-    
+
         $client = Client::create($request->all());
 
         $newClientId = $client->id;
 
         // Generate a random account number based on client_id, timestamp, and current balance (initially set to 0)
-        $accountNumber =  date("Ymd",time()) . '_'. $client->id;
+        $accountNumber =  date("Ymd",time()) . $client->id;
 
         $account = Account::create([
             'client_id' => $client->id,
             'account_number' => $accountNumber,
             'current_balance' => 0,
         ]);
-    
+
         return response()->json(['message' => 'client created successfully', 'client' => $client], 200);
 
-    
+
     }
 
     public function searchClients($request) {
@@ -108,7 +108,7 @@ class PreRegService {
         }
 
         return response()->json(['clients' => $clients], 200);
-       
+
     }
 
     public function viewUser($id) {
@@ -123,7 +123,7 @@ class PreRegService {
     }
 
     public function editClient($request, $id) {
-        
+
         $client = Client::findOrFail($id);
 
         $validatedData = $request->validate([
@@ -156,7 +156,7 @@ class PreRegService {
         $client = Client::findOrFail($id);
 
         $client->update(['active' => 0]);
-    
+
         return response()->json([
             'message' => 'Client updated successfully.',
             'client' => $client
@@ -167,7 +167,7 @@ class PreRegService {
         $client = Client::findOrFail($id);
 
         $client->update(['active' => 1]);
-    
+
         return response()->json([
             'message' => 'Client updated successfully.',
             'client' => $client
