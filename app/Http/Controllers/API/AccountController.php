@@ -139,7 +139,7 @@ class AccountController extends Controller
             return response()->json(['error' => "Account Not Found: ". $account], 404);
         }
         catch (\ErrorException $e) {
-            return response()->json(['error' => "Qr Code not valid: ". $account], 404);
+            return response()->json(['error' => "Qr Code not valid: ". $account. $e], 404);
         }
 
     }
