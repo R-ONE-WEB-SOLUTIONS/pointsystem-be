@@ -58,6 +58,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::apiResource('accounts', AccountController::class);
     Route::post('/viewAllAccounts',[AccountController::class, 'viewAllAccounts']);
     Route::post('/scanAccount',[AccountController::class, 'scanAccount']);
+    Route::post('/checkClient',[AccountController::class, 'checkClient']);
 
     //
 

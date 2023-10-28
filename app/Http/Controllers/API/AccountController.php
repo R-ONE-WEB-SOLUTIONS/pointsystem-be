@@ -157,7 +157,7 @@ class AccountController extends Controller
             if (!$acc->client->active) {
                 return response()->json(['error' => 'This account is associated with an inactive client. Transactions are not allowed.'], 400);
             }
-            $transactions = Transaction::where('account_id', '=', $account)->orderBy('transactions.created_at', 'desc')->with('voidReason')->get();
+            $transactions = Transaction::where('account_id', '=', $acc->id)->orderBy('transactions.created_at', 'desc')->with('voidReason')->get();
             return response()->json([
                 'message' => 'Account found',
                 'account_number' => $acc->account_number,
