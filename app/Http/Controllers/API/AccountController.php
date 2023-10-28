@@ -122,7 +122,7 @@ class AccountController extends Controller
             } catch (ModelNotFoundException $e) {
                 return response()->json(['error' => $e], 404);
             }
-            if (!$acc->$client->active) {
+            if (!$acc->client->active) {
                 return response()->json(['error' => 'This account is associated with an inactive client. Transactions are not allowed.'], 400);
             }
             return response()->json([
@@ -139,7 +139,7 @@ class AccountController extends Controller
             return response()->json(['error' => "Account Not Found: ". $account], 404);
         }
         catch (\ErrorException $e) {
-            return response()->json(['error' => "Qr Code not valid: ". $account. $e], 404);
+            return response()->json(['error' => "Qr Code not valid: ". $account], 404);
         }
 
     }
@@ -154,7 +154,7 @@ class AccountController extends Controller
             } catch (ModelNotFoundException $e) {
                 return response()->json(['error' => $e], 404);
             }
-            if (!$acc->$client->active) {
+            if (!$acc->client->active) {
                 return response()->json(['error' => 'This account is associated with an inactive client. Transactions are not allowed.'], 400);
             }
             $transactions = Transaction::where('account_id', '=', $account)->orderBy('transactions.created_at', 'desc')->with('voidReason')->get();
