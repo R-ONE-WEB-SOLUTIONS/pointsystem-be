@@ -200,10 +200,10 @@ class ClientService {
 
             // Client's expiry date is more than today, update the client's active status
             if ($client->client_type_id == 1 && $client->business_id == 1) {
-                $expiryDate->add(new DateInterval('P3Y'));
+
                 $client->update(['active' => 1, 'expiry_date' => date('Y-m-d', strtotime($client->expiry_date . ' + ' . 3 . ' years'))]);
             } elseif ($client->client_type_id == 2 && $client->business_id == 1) {
-                $expiryDate->add(new DateInterval('P6Y'));
+
                 $client->update(['active' => 1, 'expiry_date' => date('Y-m-d', strtotime($client->expiry_date . ' + ' . 6 . ' years'))]);
             }
 
