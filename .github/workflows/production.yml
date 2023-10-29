@@ -24,10 +24,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: Create .env file from .env.production
       run: cp .env.production .env
-    - name: Install Composer
-      run: |
-        curl -sS https://getcomposer.org/installer | php
-        sudo mv composer.phar /usr/local/bin/composer
+
 
     - name: Update Composer Lock File
       run: composer update --no-scripts --no-progress
@@ -44,16 +41,18 @@ jobs:
       run: npm install
     - name: Create .htaccess file
       run: |
-        echo "<IfModule mod_rewrite.c>" > .htaccess
-            echo "Options +FollowSymLinks" >> .htaccess
-            echo "RewriteEngine On" >> .htaccess
-            echo "RewriteCond %{REQUEST_URI} !^/public/" >> .htaccess
-            echo "RewriteCond %{REQUEST_FILENAME} !-d" >> .htaccess
-            echo "RewriteCond %{REQUEST_FILENAME} !-f" >> .htaccess
-            echo "RewriteRule ^(.*)$ /public/$1" >> .htaccess
-            echo "#RewriteRule ^ index.php [L]" >> .htaccess
-            echo "RewriteRule ^(/)?$ public/index.php [L]" >> .htaccess
-        echo "</IfModule>"
+        cat <<EOL > .htaccess
+        <IfModule mod_rewrite.c>
+            Options +FollowSymLinks
+            RewriteEngine On
+            RewriteCond %{REQUEST_URI} !^/public/
+            RewriteCond %{REQUEST_FILENAME} !-d
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteRule ^(.*)$ /public/$1
+            #RewriteRule ^ index.php [L]
+            RewriteRule ^(/)?$ public/index.php [L]
+        </IfModule>
+        EOL
         
     - name: Install sshpass
       run: sudo apt-get update && sudo apt-get install -y sshpass
@@ -64,7 +63,8 @@ jobs:
           
     - name: Create remote directory (if not exists)
       run: |
-          echo '${{ secrets.SSH_PROD }}' | sshpass -p '${{ secrets.SSH_PROD }}' ssh -t dltprime@31.220.55.56 "sudo -S mkdir -p /var/www/html/dltprime_prod_be"
+          echo '${{ secrets.SSH_PROD }}' | sshpass -p '${{ secrets.SSH_PROD }}' ssh -t root@31.220.55.56 "sudo -S mkdir -p /home/ubuntu/be.dltprimeventures.com/public_html"
     - name: Deploy to Hostinger
       run: |
-          sshpass -p '${{ secrets.SSH_PASS }}' rsync -avz -e "ssh -p 22" ./ root@31.220.55.56:/var/www/html/dltprime_prod_be
+          sshpass -p '${{ secrets.SSH_PROD }}' rsync -avz -e "ssh -p 22" ./ root@31.220.55.56:/home/ubuntu/be.dltprimeventures.com/public_html
+          echo '${{ secrets.SSH_PROD }}' | sshpass -p '${{ secrets.SSH_PROD }}' ssh -t root@31.220.55.56 "sudo -S chown www-data:www-data -R /home/ubuntu/be.dltprimeventures.com/public_html"
