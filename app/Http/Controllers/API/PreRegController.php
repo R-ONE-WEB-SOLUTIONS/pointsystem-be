@@ -159,13 +159,13 @@ class PreRegController extends Controller
             $result = DB::transaction(function () use ($data, $preClient){
                 $client = Client::create($data);
                 
-                // if ($client->client_type_id == 1 && $client->business_id == 1) {
+                if ($client->client_type_id == 1 && $client->business_id == 1) {
             
-                    $client->update(['expiry_date' => now()->addYears(3)]);
-                // } elseif ($client->client_type_id == 2 && $client->business_id == 1) {
+                    $client->update(['expiry_date' => now()->addYears(3)->setTime(23, 59, 59)]);
+                } elseif ($client->client_type_id == 2 && $client->business_id == 1) {
                     
-                //     $client->update(['expiry_date' => now()->addYears(6)]);
-                // }
+                    $client->update(['expiry_date' => now()->addYears(6)->setTime(23, 59, 59)]);
+                }
 
 
                 $preClient->update([
