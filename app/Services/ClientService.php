@@ -102,15 +102,15 @@ class ClientService {
         ]);
 
 
-        
+
             if ($client->client_type_id == 1 && $client->business_id == 1) {
-                
-                $client->update(['expiry_date' => now()->addYears(3)]);
+
+                $client->update(['expiry_date' => now()->addYears(3)->setTime(23, 59, 59)]);
             } elseif ($client->client_type_id == 2 && $client->business_id == 1) {
-                
-                $client->update(['expiry_date' => now()->addYears(6)]);
+
+                $client->update(['expiry_date' => now()->addYears(6)->setTime(23, 59, 59)]);
             }
-    
+
         return response()->json(['message' => 'client created successfully', 'client' => $client], 200);
 
 
@@ -188,5 +188,43 @@ class ClientService {
             'message' => 'Client updated successfully.',
             'client' => $client
         ]);
+    }
+
+    public function renewClient($id) {
+        $client = Client::findOrFail($id);
+        $expiryDate = new \DateTime($client->expiry_date); // Assuming expiry_date is a field in your Client model
+        $today = new \DateTime();
+
+
+        if ($expiryDate > $today) {
+
+            // Client's expiry date is more than today, update the client's active status
+            if ($client->client_type_id == 1 && $client->business_id == 1) {
+
+                $client->update(['active' => 1, 'expiry_date' => date('Y-m-d', strtotime($client->expiry_date . ' + ' . 3 . ' years'))]);
+            } elseif ($client->client_type_id == 2 && $client->business_id == 1) {
+
+                $client->update(['active' => 1, 'expiry_date' => date('Y-m-d', strtotime($client->expiry_date . ' + ' . 6 . ' years'))]);
+            }
+
+
+            return response()->json([
+                'message' => 'Client updated successfully.',
+                'client' => $client
+            ]);
+        } else {
+            if ($client->client_type_id == 1 && $client->business_id == 1) {
+
+                $client->update(['active' => 1, 'expiry_date' => now()->addYears(3)->setTime(23, 59, 59)]);
+            } elseif ($client->client_type_id == 2 && $client->business_id == 1) {
+
+                $client->update(['active' => 1, 'expiry_date' => now()->addYears(3)->setTime(23, 59, 59)]);
+            }
+            return response()->json([
+                'message' => 'Client updated successfully.',
+                'client' => $client
+            ]);
+
+        }
     }
 }

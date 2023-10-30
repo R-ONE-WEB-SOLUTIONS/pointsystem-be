@@ -55,6 +55,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::apiResource('clients', ClientController::class);
     Route::get('/searchClients', [ClientController::class, 'searchClients']);
     Route::put('/activateClient/{client}', [ClientController::class, 'activateClient']);
+    Route::put('/renewClient/{client}', [ClientController::class, 'renewClient']);
     Route::post('/viewAllClients',[ClientController::class, 'viewAllClients']);
 
     //Account
