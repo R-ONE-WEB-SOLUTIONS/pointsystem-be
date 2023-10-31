@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PrintController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ClientController;
@@ -19,6 +20,8 @@ use App\Http\Controllers\API\PointCalculationController;
 // });
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/print-receipt', [PrintController::class, 'printReceipt']);
+
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('/getGraphDetails', [UserController::class, 'graphDetails']);
@@ -52,12 +55,14 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::apiResource('clients', ClientController::class);
     Route::get('/searchClients', [ClientController::class, 'searchClients']);
     Route::put('/activateClient/{client}', [ClientController::class, 'activateClient']);
+    Route::put('/renewClient/{client}', [ClientController::class, 'renewClient']);
     Route::post('/viewAllClients',[ClientController::class, 'viewAllClients']);
 
     //Account
     Route::apiResource('accounts', AccountController::class);
     Route::post('/viewAllAccounts',[AccountController::class, 'viewAllAccounts']);
     Route::post('/scanAccount',[AccountController::class, 'scanAccount']);
+    Route::post('/checkClient',[AccountController::class, 'checkClient']);
 
     //
 

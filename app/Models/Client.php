@@ -20,6 +20,7 @@ class Client extends Model
         'address',
         'client_type_id',
         'business_id',
+        'expiry_date',
         'active'
     ];
 

@@ -116,85 +116,85 @@ class DatabaseSeeder extends Seeder
 
         User::insert($user);
 
-        $pre_reg = [
-            [
-                'first_name' => 'Mark',
-                'last_name' => 'Achacoso',
-                'middle_name' => '',
-                'extension_name' => '',
-                'email' => 'mark@gmail.com',
-                'phone_number' => '09678777939',
-                'address' => 'somewhere',
-                'client_type_id' => 1,
-                'business_id' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ],
-            [
-                'first_name' => 'Denzel',
-                'last_name' => 'Lanzaderas',
-                'middle_name' => '',
-                'extension_name' => '',
-                'email' => 'denz@gmail.com',
-                'phone_number' => '09678777939',
-                'address' => 'somewhere',
-                'client_type_id' => 2,
-                'business_id' => 2,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ]
-        ];
-        PreReg::insert($pre_reg);
-        $clients = [
-            [
-                'first_name' => 'Mark',
-                'last_name' => 'Achacoso',
-                'middle_name' => '',
-                'extension_name' => '',
-                'email' => 'mark@gmail.com',
-                'phone_number' => '09678777939',
-                'address' => 'somewhere',
-                'client_type_id' => 1,
-                'business_id' => 1,
-                'active' => true,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ],
-            [
-                'first_name' => 'Denzel',
-                'last_name' => 'Lanzaderas',
-                'middle_name' => '',
-                'extension_name' => '',
-                'email' => 'denz@gmail.com',
-                'phone_number' => '09678777939',
-                'address' => 'somewhere',
-                'client_type_id' => 2,
-                'business_id' => 2,
-                'active' => true,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ]
-        ];
-        Client::insert($clients);
+        // $pre_reg = [
+        //     [
+        //         'first_name' => 'Mark',
+        //         'last_name' => 'Achacoso',
+        //         'middle_name' => '',
+        //         'extension_name' => '',
+        //         'email' => 'mark@gmail.com',
+        //         'phone_number' => '09678777939',
+        //         'address' => 'somewhere',
+        //         'client_type_id' => 1,
+        //         'business_id' => 1,
+        //         'created_at' => Carbon::now(),
+        //         'updated_at' => Carbon::now()
+        //     ],
+        //     [
+        //         'first_name' => 'Denzel',
+        //         'last_name' => 'Lanzaderas',
+        //         'middle_name' => '',
+        //         'extension_name' => '',
+        //         'email' => 'denz@gmail.com',
+        //         'phone_number' => '09678777939',
+        //         'address' => 'somewhere',
+        //         'client_type_id' => 2,
+        //         'business_id' => 2,
+        //         'created_at' => Carbon::now(),
+        //         'updated_at' => Carbon::now()
+        //     ]
+        // ];
+        // PreReg::insert($pre_reg);
+        // $clients = [
+        //     [
+        //         'first_name' => 'Mark',
+        //         'last_name' => 'Achacoso',
+        //         'middle_name' => '',
+        //         'extension_name' => '',
+        //         'email' => 'mark@gmail.com',
+        //         'phone_number' => '09678777939',
+        //         'address' => 'somewhere',
+        //         'client_type_id' => 1,
+        //         'business_id' => 1,
+        //         'active' => true,
+        //         'created_at' => Carbon::now(),
+        //         'updated_at' => Carbon::now()
+        //     ],
+        //     [
+        //         'first_name' => 'Denzel',
+        //         'last_name' => 'Lanzaderas',
+        //         'middle_name' => '',
+        //         'extension_name' => '',
+        //         'email' => 'denz@gmail.com',
+        //         'phone_number' => '09678777939',
+        //         'address' => 'somewhere',
+        //         'client_type_id' => 2,
+        //         'business_id' => 2,
+        //         'active' => true,
+        //         'created_at' => Carbon::now(),
+        //         'updated_at' => Carbon::now()
+        //     ]
+        // ];
+        // Client::insert($clients);
 
-        $account = [
-            [    
-                'account_number' => date("Ymd",time()) .'_'. 100000001,
-                'client_id' => 100000001,
-                'current_balance' => 0.00,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ],
-            [    
-                'account_number' => date("Ymd",time()) .'_'. 100000002,
-                'client_id' => 100000002,
-                'current_balance' => 0.00,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ]
-        ];
+        // $account = [
+        //     [    
+        //         'account_number' => date("Ymd",time()) .'_'. 100000001,
+        //         'client_id' => 100000001,
+        //         'current_balance' => 0.00,
+        //         'created_at' => Carbon::now(),
+        //         'updated_at' => Carbon::now()
+        //     ],
+        //     [    
+        //         'account_number' => date("Ymd",time()) .'_'. 100000002,
+        //         'client_id' => 100000002,
+        //         'current_balance' => 0.00,
+        //         'created_at' => Carbon::now(),
+        //         'updated_at' => Carbon::now()
+        //     ]
+        // ];
         
-        Account::insert($account);
+        // Account::insert($account);
         
 
         $point_calculation = [

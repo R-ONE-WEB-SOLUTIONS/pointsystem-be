@@ -18,9 +18,10 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call(function () {
             // Update clients whose accounts are one year old
-            Client::where('created_at', '<', now()->subYear())
+            Client::where('expiry_date', '<', now())
                 ->where('active', true)
                 ->update(['active' => false]);
+
         });
     }
 
