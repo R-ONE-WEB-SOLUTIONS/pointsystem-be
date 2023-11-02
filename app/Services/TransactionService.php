@@ -16,24 +16,24 @@ class TransactionService {
     }
 
     public function rewardPoints($request, $user_id){
-        
-        
+
+
         $acc = $this->getAccountInfo($request->account);
-        
+
         $pointMultiplier = $this->getPointMultiplier($request->business_id);
-        
+
         $multiplier = $pointMultiplier->multiplier;
         $reciept_amount = (int)$request->reciept_amount;
-        $rewardPoint = ($reciept_amount * $multiplier); 
+        $rewardPoint = ($reciept_amount * $multiplier);
         $newPoints = $acc->current_balance + $rewardPoint;
-        
+
 
         DB::beginTransaction();
 
-        
+
         try {
             $newTransaction = Transaction::create([
-                'reference_id' => $acc->id . '_' . time(),
+                'reference_id' => $acc->id  . time(),
                 'reciept_number' => $request->reciept_number,
                 'reciept_amount' => $request->reciept_amount,
                 'points' => $rewardPoint,
@@ -67,7 +67,7 @@ class TransactionService {
             return response()->json(['error' => $e], 400);
         }
 
-        
+
     }
 
 
@@ -88,7 +88,7 @@ class TransactionService {
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => $e], 404);
         }
-        
+
 
     }
 }
