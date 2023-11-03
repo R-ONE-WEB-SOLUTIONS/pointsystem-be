@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->date('expirey_date')->nullable()->change();
+            $table->date('expiry_date')->nullable()->change();
         });
     }
 

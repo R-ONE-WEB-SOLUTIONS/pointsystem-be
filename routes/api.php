@@ -21,7 +21,7 @@ use App\Http\Controllers\API\PointCalculationController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/print-receipt', [PrintController::class, 'printReceipt']);
-
+Route::post('/checkClient',[AccountController::class, 'checkClient']);
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('/getGraphDetails', [UserController::class, 'graphDetails']);
@@ -62,7 +62,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::apiResource('accounts', AccountController::class);
     Route::post('/viewAllAccounts',[AccountController::class, 'viewAllAccounts']);
     Route::post('/scanAccount',[AccountController::class, 'scanAccount']);
-    Route::post('/checkClient',[AccountController::class, 'checkClient']);
+    // Route::post('/checkClient',[AccountController::class, 'checkClient']);
 
     //
 
