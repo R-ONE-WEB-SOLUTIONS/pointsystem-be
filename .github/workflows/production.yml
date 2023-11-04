@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "production" ]
   pull_request:
-    branches: [ "prodiction" ]
+    branches: [ "production" ]
 
 jobs:
   laravel-tests:
