@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
     {
         $clientTypes = [
             [
-                'client_type' => 'Basic',
+                'client_type' => 'Elite',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
