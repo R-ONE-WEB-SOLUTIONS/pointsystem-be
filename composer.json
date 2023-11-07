@@ -8,6 +8,7 @@
         "php": "^8.0",
         "ext-gd": "*",
         "calcinai/php-imagick": "^0.1.2",
+        "doctrine/dbal": "^3.7",
         "fruitcake/laravel-cors": "^2.0.5",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^0.6.8",
