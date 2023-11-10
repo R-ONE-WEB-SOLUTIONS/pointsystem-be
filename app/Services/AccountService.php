@@ -31,7 +31,7 @@ class AccountService {
         if($request->business_id != null){
             $Accounts = Account::
             join('clients', 'clients.id', '=', 'client_id')
-            ->join('client_types', 'client_types.id', '=', 'clients.client_type_id')
+            ->leftJoin('client_types', 'client_types.id', '=', 'clients.client_type_id')
             ->join('businesses', 'businesses.id', '=', 'clients.business_id')
             ->where('clients.business_id', $request->business_id)
             ->select('accounts.*','clients.first_name','clients.middle_name', 'clients.last_name','client_types.client_type', 'businesses.business_name')
@@ -44,7 +44,7 @@ class AccountService {
             return response()->json($Accounts, 200);
         }else{
             $Accounts = Account::join('clients', 'clients.id', '=', 'client_id')
-            ->join('client_types', 'client_types.id', '=', 'clients.client_type_id')
+            ->leftJoin('client_types', 'client_types.id', '=', 'clients.client_type_id')
             ->join('businesses', 'businesses.id', '=', 'clients.business_id')
             ->select('accounts.*', 'clients.first_name','clients.middle_name', 'clients.last_name','client_types.client_type', 'businesses.business_name')
             ->get();
