@@ -40,7 +40,14 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    protected static function boot()
+    {
+        parent::boot();
 
+        static::creating(function ($model) {
+            $model->created_at = now();
+        });
+    }
     /**
      * The attributes that should be cast.
      *
