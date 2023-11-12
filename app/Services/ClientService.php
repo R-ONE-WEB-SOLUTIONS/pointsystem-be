@@ -79,7 +79,7 @@ class ClientService {
             ],
             'phone_number' => 'required|string|max:11',
             'address' => 'required|string|max:255',
-            'client_type_id' => 'required',
+            // 'client_type_id' => 'required',
             'business_id' => 'required',
             'active' => 'required',
         ]);
@@ -109,6 +109,10 @@ class ClientService {
             } elseif ($client->client_type_id == 2 && $client->business_id == 1) {
 
                 $client->update(['expiry_date' => now()->addYears(6)->setTime(23, 59, 59)]);
+            }
+            else{
+                $client->update(['expiry_date' => now()->addYears(3)->setTime(23, 59, 59)]);
+
             }
 
         return response()->json(['message' => 'client created successfully', 'client' => $client], 200);
@@ -151,7 +155,7 @@ class ClientService {
             'phone_number' => 'string|max:20',
             'address' => 'string|max:255',
             'active' => 'boolean',
-            'client_type_id' => 'integer',
+            // 'client_type_id' => 'integer',
             'business_id' => 'required',
         ]);
 
@@ -159,7 +163,17 @@ class ClientService {
         // $fillableData = array_filter($validatedData, function ($value) {
         //     return $value !== null;
         // });
+        if ($client->client_type_id == 1 && $client->business_id == 1) {
 
+            $client->update(['expiry_date' => now()->addYears(3)->setTime(23, 59, 59)]);
+        } elseif ($client->client_type_id == 2 && $client->business_id == 1) {
+
+            $client->update(['expiry_date' => now()->addYears(6)->setTime(23, 59, 59)]);
+        }
+        else{
+            $client->update(['expiry_date' => now()->addYears(3)->setTime(23, 59, 59)]);
+
+        }
         $client->update($validatedData);
 
         return response()->json([

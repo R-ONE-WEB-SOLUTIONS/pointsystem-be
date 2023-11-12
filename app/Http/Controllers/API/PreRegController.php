@@ -79,7 +79,7 @@ class PreRegController extends Controller
             ],
             'phone_number' => 'required|string|max:11',
             'address' => 'required|string|max:255',
-            'client_type_id' => 'required',
+            // 'client_type_id' => 'required',
             'business_id' => 'required',
         ]);
 
@@ -111,7 +111,7 @@ class PreRegController extends Controller
             ],
             'phone_number' => 'string|max:20',
             'address' => 'string|max:255',
-            'client_type_id' => 'integer',
+            // 'client_type_id' => 'integer',
             'business_id' => 'required',
         ]);
 
@@ -165,6 +165,10 @@ class PreRegController extends Controller
                 } elseif ($client->client_type_id == 2 && $client->business_id == 1) {
                     
                     $client->update(['expiry_date' => now()->addYears(6)->setTime(23, 59, 59)]);
+                }
+                else{
+
+                    $client->update(['expiry_date' => now()->addYears(3)->setTime(23, 59, 59)]);
                 }
 
 

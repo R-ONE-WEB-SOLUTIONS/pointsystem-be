@@ -139,7 +139,7 @@ class AccountController extends Controller
                 'account_number' => $acc->account_number,
                 'business_id' => $acc->client->business_id,
                 'business_name' => $acc->client->business->business_name,
-                'card_type' => $acc->client->clientType->client_type,
+                'card_type' => $acc->client->clientType?->client_type,
                 'name' => $acc->client->first_name .' '.
                         ($acc->client->middle_name !== null ? $acc->client->middle_name.' ' : '') .
                         $acc->client->last_name .' '.
@@ -176,7 +176,7 @@ class AccountController extends Controller
                 'business_id' => $acc->client->business_id,
                 'business_name' => $acc->client->business->business_name,
                 'expiry_date' => $acc->client->expiry_date,
-                'card_type' => $acc->client->clientType->client_type,
+                'card_type' => $acc->client->clientType?->client_type,
                 'name' => $acc->client->first_name .' '. ($acc->client->middle_name !== null ? $acc->client->middle_name.' ' : ''). $acc->client->last_name . ' '. ($acc->client->extension_name ? $acc->clients->extension_name: null),
                 'current_balance' => $acc->current_balance,
                 'point_multiplier' => $pointCalc->multiplier,
