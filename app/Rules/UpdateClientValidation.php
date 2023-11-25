@@ -16,13 +16,19 @@ class UpdateClientValidation implements Rule
 
     public function passes($attribute, $value)
     {
-        $existingEmail = DB::table('clients')
+        if($value){
+            $existingEmail = DB::table('clients')
             ->where('email', $value)
             ->where('id', '!=', $this->id)
             ->where('business_id', $this->businessId)
             ->exists();
 
         return !$existingEmail;
+        }
+        else{
+        return false;
+        }
+
     }
 
     public function message()
