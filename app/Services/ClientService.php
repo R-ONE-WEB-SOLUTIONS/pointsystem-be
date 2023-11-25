@@ -71,7 +71,6 @@ class ClientService {
             'middle_name' => 'nullable|string|max:255',
             'extension_name' => 'nullable|string|max:255',
             'email' => [
-                'required',
                 'string',
                 'email',
                 'max:255',
