@@ -71,14 +71,14 @@ class PreRegController extends Controller
             'middle_name' => 'nullable|string|max:255',
             'extension_name' => 'nullable|string|max:255',
             'email' => [
-                'required',
+                'nullable',
                 'string',
                 'email',
                 'max:255',
                 new CreatePreRegValidation($request->business_id),
             ],
-            'phone_number' => 'required|string|max:11',
-            'address' => 'required|string|max:255',
+            'phone_number' => 'nullable|string|max:11',
+            'address' => 'nullable|string|max:255',
             // 'client_type_id' => 'required',
             'business_id' => 'required',
         ]);
@@ -106,11 +106,12 @@ class PreRegController extends Controller
             'middle_name' => 'nullable|string|max:255',
             'extension_name' => 'nullable|string|max:255',
             'email' => [
+                'nullable',
                 'email',
                 new UpdatePreRegValidation($request->id,$request->business_id),
             ],
-            'phone_number' => 'string|max:20',
-            'address' => 'string|max:255',
+            'phone_number' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:255',
             // 'client_type_id' => 'integer',
             'business_id' => 'required',
         ]);
@@ -149,21 +150,24 @@ class PreRegController extends Controller
             $data['active'] = 1;
 
             // Check if the email is already in use for the same business type
-            $existingClient = Client::where('email', $data['email'])
+            if($data['email']){
+                $existingClient = Client::where('email', $data['email'])
                 ->where('business_id', $data['business_id'])
                 ->first();
 
             if ($existingClient) {
                 return response()->json(['error' => 'Email is already in use for the same business type.'], 409);
             }
+            }
+
             $result = DB::transaction(function () use ($data, $preClient){
                 $client = Client::create($data);
-                
+
                 if ($client->client_type_id == 1 && $client->business_id == 1) {
-            
+
                     $client->update(['expiry_date' => now()->addYears(3)->setTime(23, 59, 59)]);
                 } elseif ($client->client_type_id == 2 && $client->business_id == 1) {
-                    
+
                     $client->update(['expiry_date' => now()->addYears(6)->setTime(23, 59, 59)]);
                 }
                 else{

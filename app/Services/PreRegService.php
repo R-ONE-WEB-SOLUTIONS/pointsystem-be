@@ -62,7 +62,7 @@ class PreRegService {
             'last_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'extension_name' => 'nullable|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'string|email|max:255|unique:users',
             'phone_number' => 'required|string|max:11',
             'address' => 'required|string|max:255',
             'client_type_id' => 'required',
