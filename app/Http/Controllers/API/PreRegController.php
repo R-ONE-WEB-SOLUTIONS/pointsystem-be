@@ -71,7 +71,6 @@ class PreRegController extends Controller
             'middle_name' => 'nullable|string|max:255',
             'extension_name' => 'nullable|string|max:255',
             'email' => [
-                'required',
                 'string',
                 'email',
                 'max:255',
@@ -149,21 +148,24 @@ class PreRegController extends Controller
             $data['active'] = 1;
 
             // Check if the email is already in use for the same business type
-            $existingClient = Client::where('email', $data['email'])
+            if($data['email']){
+                $existingClient = Client::where('email', $data['email'])
                 ->where('business_id', $data['business_id'])
                 ->first();
 
             if ($existingClient) {
                 return response()->json(['error' => 'Email is already in use for the same business type.'], 409);
             }
+            }
+
             $result = DB::transaction(function () use ($data, $preClient){
                 $client = Client::create($data);
-                
+
                 if ($client->client_type_id == 1 && $client->business_id == 1) {
-            
+
                     $client->update(['expiry_date' => now()->addYears(3)->setTime(23, 59, 59)]);
                 } elseif ($client->client_type_id == 2 && $client->business_id == 1) {
-                    
+
                     $client->update(['expiry_date' => now()->addYears(6)->setTime(23, 59, 59)]);
                 }
                 else{

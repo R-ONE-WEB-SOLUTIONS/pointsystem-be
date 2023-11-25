@@ -16,12 +16,18 @@ class CreatePreRegValidation implements Rule
 
     public function passes($attribute, $value)
     {
-        $existingEmail = DB::table('pre_regs')
+        if($value){
+            $existingEmail = DB::table('pre_regs')
             ->where('email', $value)
             ->where('business_id', $this->businessId)
             ->exists();
 
         return !$existingEmail;
+        }
+        else{
+        return false;
+        }
+
     }
 
     public function message()
