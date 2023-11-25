@@ -76,8 +76,8 @@ class PreRegController extends Controller
                 'max:255',
                 new CreatePreRegValidation($request->business_id),
             ],
-            'phone_number' => 'required|string|max:11',
-            'address' => 'required|string|max:255',
+            'phone_number' => 'string|max:11',
+            'address' => 'string|max:255',
             // 'client_type_id' => 'required',
             'business_id' => 'required',
         ]);
